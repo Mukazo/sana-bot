@@ -19,12 +19,14 @@ async function requestBatchChoices(interaction) {
   });
 
   return new Promise(resolve => {
+    let unlisten = () => {};
+
     const timeout = setTimeout(() => {
       unlisten();
       resolve([]);
-    }, 2_500);
+    }, 2500);
 
-    const unlisten = listenForResults(result => {
+    unlisten = listenForResults(result => {
       if (!result || result.jobId !== jobId) return;
 
       clearTimeout(timeout);
@@ -56,7 +58,6 @@ module.exports = {
     await interaction.editReply({ content: 'Loading…' });
 
     const opts = interaction.options;
-
     const selectedBatch = opts.getString('batch');
 
     const payload = {
@@ -163,14 +164,26 @@ module.exports = {
 
       const jobId = `${interaction.id}:${Date.now()}`;
 
-      await enqueueInteraction('card-create', {
-        jobId,
-        ...payload
-      });
+      console.log('[CARD CREATE] enqueueing job:', jobId);
 
-      const unlisten = listenForResults(async result => {
+      let unlisten = () => {};
+
+      const timeout = setTimeout(async () => {
+        unlisten();
+
+        await interaction.editReply({
+          content: 'Card creation timed out. Worker did not send a result back.',
+          embeds: [],
+          components: []
+        }).catch(() => {});
+      }, 60_000);
+
+      unlisten = listenForResults(async result => {
         if (!result || result.jobId !== jobId) return;
 
+        console.log('[CARD CREATE] got result:', result);
+
+        clearTimeout(timeout);
         unlisten();
 
         if (!result.ok) {
@@ -183,6 +196,11 @@ module.exports = {
         return interaction.followUp({
           content: `Created \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}.`
         });
+      });
+
+      await enqueueInteraction('card-create', {
+        jobId,
+        ...payload
       });
     });
 
