@@ -1,0 +1,92 @@
+const { SlashCommandBuilder } = require('discord.js');
+const createCard = require('../subcommands/card/create.js');
+const editCard = require('../subcommands/card/edit.js');
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName('card')
+    .setDescription('Manage cards')
+    .setDefaultMemberPermissions('0')
+    .addSubcommand(sub =>
+      sub.setName('create')
+        .setDescription('create a card')
+        .addStringOption(opt =>
+          opt.setName('cardcode').setDescription('card code').setRequired(true))
+        .addStringOption(opt =>
+          opt.setName('rarity')
+            .setDescription('rarity of card')
+            .setRequired(true)
+            .addChoices(
+              { name: 'Common', value: 'Common' },
+              { name: 'Rare', value: 'Rare' },
+              { name: 'Ultra', value: 'Ultra' },
+              { name: 'Epic', value: 'Epic' },
+              { name: 'Special', value: 'Special' },
+              { name: 'Mythic', value: 'Mythic' },
+              { name: 'Celestial', value: 'Celestial' }
+            ))
+        .addStringOption(opt => opt.setName('group').setDescription('group of card').setRequired(true))
+        .addStringOption(opt => opt.setName('name').setDescription('name of card').setRequired(true))
+        .addUserOption(opt => opt.setName('designer').setDescription('initial designer').setRequired(true))
+        .addBooleanOption(opt => opt.setName('active').setDescription('set card activity status').setRequired(true))
+        .addAttachmentOption(opt => opt.setName('image').setDescription('upload card image').setRequired(true))
+        .addStringOption(opt =>
+          opt.setName('batch')
+            .setDescription('batch code')
+            .setRequired(false)
+            .setAutocomplete(true))
+        .addStringOption(opt => opt.setName('era').setDescription('era of card').setRequired(false))
+        .addStringOption(opt => opt.setName('emoji').setDescription('optional card emoji').setRequired(false))
+        .addUserOption(opt => opt.setName('designer2').setDescription('optional second designer').setRequired(false))
+        .addUserOption(opt => opt.setName('designer3').setDescription('optional third designer').setRequired(false))
+        .addIntegerOption(opt => opt.setName('availablequantity').setDescription('limited quantity').setRequired(false))
+        .addStringOption(opt => opt.setName('namealias').setDescription('alternate name of card').setRequired(false))
+        .addStringOption(opt => opt.setName('groupalias').setDescription('alternate group of card').setRequired(false))
+    )
+    .addSubcommand(sub =>
+      sub.setName('edit')
+        .setDescription('Edit an existing card')
+        .addStringOption(opt => opt.setName('cardcode').setDescription('Comma-separated cardCodes'))
+        .addStringOption(opt => opt.setName('name').setDescription('Comma-separated card names'))
+        .addStringOption(opt => opt.setName('rarity').setDescription('card rarity'))
+        .addStringOption(opt => opt.setName('era').setDescription('Comma-separated eras'))
+        .addStringOption(opt => opt.setName('group').setDescription('Comma-separated groups'))
+        .addStringOption(opt =>
+          opt.setName('batch')
+            .setDescription('Comma-separated batch codes')
+            .setAutocomplete(true))
+        .addStringOption(opt => opt.setName('setcardcode').setDescription('Set new card code'))
+        .addStringOption(opt => opt.setName('setname').setDescription('New name'))
+        .addStringOption(opt => opt.setName('setgroup').setDescription('New group'))
+        .addStringOption(opt => opt.setName('setera').setDescription('New era'))
+        .addStringOption(opt => opt.setName('setrarity').setDescription('New rarity'))
+        .addStringOption(opt => opt.setName('setemoji').setDescription('New emoji'))
+        .addStringOption(opt => opt.setName('setnamealias').setDescription('new alternate name of card'))
+        .addStringOption(opt => opt.setName('setgroupalias').setDescription('new alternate group of card'))
+        .addStringOption(opt =>
+          opt.setName('setbatch')
+            .setDescription('New batch or "null" to remove')
+            .setAutocomplete(true))
+        .addIntegerOption(opt => opt.setName('availablequantity').setDescription('Set card pull limit'))
+        .addBooleanOption(opt => opt.setName('active').setDescription('Set activity status'))
+        .addStringOption(opt => opt.setName('until').setDescription('Deactivate date YYYY-MM-DD'))
+        .addAttachmentOption(opt => opt.setName('image').setDescription('Replace card image'))
+    ),
+
+  async autocomplete(interaction) {
+    const focused = interaction.options.getFocused(true);
+
+    if (!['batch', 'setbatch'].includes(focused.name)) {
+      return interaction.respond([]);
+    }
+
+    return createCard.autocompleteBatch(interaction);
+  },
+
+  async execute(interaction) {
+    const sub = interaction.options.getSubcommand();
+
+    if (sub === 'create') return createCard.execute(interaction);
+    if (sub === 'edit') return editCard.execute(interaction);
+  }
+};
