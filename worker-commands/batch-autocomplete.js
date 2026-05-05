@@ -10,8 +10,8 @@ module.exports = {
         ? {
             $or: [
               { code: { $regex: query, $options: 'i' } },
-              { name: { $regex: query, $options: 'i' } }
-            ]
+              { name: { $regex: query, $options: 'i' } },
+            ],
           }
         : {};
 
@@ -24,11 +24,9 @@ module.exports = {
         ok: true,
         jobId,
         batches: batches.map(batch => ({
-          name: batch.name
-            ? `${batch.name} (${batch.code})`
-            : batch.code,
-          value: batch.code
-        }))
+          name: batch.name ? `${batch.name} (${batch.code})` : batch.code,
+          value: batch.code,
+        })),
       };
     } catch (err) {
       console.error('[BATCH AUTOCOMPLETE ERROR]', err);
@@ -36,8 +34,9 @@ module.exports = {
       return {
         ok: false,
         jobId,
-        batches: []
+        batches: [],
+        error: err.message,
       };
     }
-  }
+  },
 };

@@ -10,25 +10,22 @@ module.exports = {
     const jobId = data.jobId;
 
     try {
+      console.log('[CARD CREATE] received:', jobId);
+
       if (!data.cardCode) throw new Error('Missing cardCode');
       if (!data.name) throw new Error('Missing name');
       if (!data.imageUrl) throw new Error('Missing imageUrl');
 
-      let deactivateAt = null;
-
-      // This replaces your old select menu finalization logic
       if (data.batch) {
         const batch = await Batch.findOne({ code: data.batch }).lean();
 
         if (!batch) {
           throw new Error(`Batch not found: ${data.batch}`);
         }
-
-        deactivateAt = batch.deactivateCardsAt ?? null;
       }
 
       const image = await axios.get(data.imageUrl, {
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
       });
 
       const imageDir = path.join(__dirname, '..', 'images');
@@ -50,23 +47,20 @@ module.exports = {
         emoji: data.emoji,
         group: data.group,
         era: data.era,
-
-        // finalized batch values
         batch: data.batch || null,
         deactivateAt,
-
         active: data.active,
         availableQuantity: data.availableQuantity,
         designerIds: data.designerIds,
         localImagePath: imagePath,
-        createdBy: data.userId
+        createdBy: data.userId,
       });
 
       return {
         ok: true,
         jobId,
         cardCode: data.cardCode,
-        batch: data.batch || null
+        batch: data.batch || null,
       };
     } catch (err) {
       console.error('[CARD CREATE ERROR]', err);
@@ -75,8 +69,8 @@ module.exports = {
         ok: false,
         jobId,
         cardCode: data.cardCode,
-        error: err.message
+        error: err.message,
       };
     }
-  }
+  },
 };
