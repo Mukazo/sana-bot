@@ -63,12 +63,8 @@ module.exports = {
         : 'Unknown';
 
       const embed = new EmbedBuilder()
-        .setTitle(`${rarityDisplay}`)
-        .setColor(0x5865F2)
-        .setDescription(`***Viewing...***\n
-﹒ \<:samus:1501287426537029676> ${card.name} ﹗ ${card.group} 彡\n
-︵︵ ${card.era} ⟡﹐\n
-✨ ﹒ ┈ ﹕${rarityDisplay} | \`${card.cardCode}\` ﹒ ᶻᶻ ﹒`)
+        .setColor(0xE8D0A1)
+        .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> ${card.name} ﹗ ${card.group} 彡\n︵︵ ${card.era} ⟡﹐\n✨ ﹒ ┈ ﹕${rarityDisplay} | \`${card.cardCode}\` ﹒ ᶻᶻ ﹒`)
         .setFooter({
           text: `Page ${index + 1} of ${orderedCards.length}`
         });
