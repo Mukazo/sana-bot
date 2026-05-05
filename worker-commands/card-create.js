@@ -48,7 +48,6 @@ module.exports = {
         group: data.group,
         era: data.era,
         batch: data.batch || null,
-        deactivateAt,
         active: data.active,
         availableQuantity: data.availableQuantity,
         designerIds: data.designerIds,
