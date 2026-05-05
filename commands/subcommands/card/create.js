@@ -7,7 +7,7 @@ const {
 } = require('discord.js');
 
 const { enqueueInteraction, listenForResults } = require('../../../queue');
-const generateRarity = require('../../utils/generateRarity');
+const generateRarity = require('../../../utils/generateRarity');
 
 async function requestBatchChoices(interaction) {
   const focused = interaction.options.getFocused() ?? '';
