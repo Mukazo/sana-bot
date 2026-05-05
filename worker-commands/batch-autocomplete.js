@@ -1,58 +1,42 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-const Card = require('../models/Card');
+const Batch = require('../models/Batch');
 
 module.exports = {
   async execute(data) {
     const jobId = data.jobId;
+    const query = (data.query || '').trim();
 
     try {
-      if (!data.cardCode) throw new Error('Missing cardCode');
-      if (!data.name) throw new Error('Missing name');
-      if (!data.imageUrl) throw new Error('Missing imageUrl');
+      const filter = query
+        ? {
+            $or: [
+              { code: { $regex: query, $options: 'i' } },
+              { name: { $regex: query, $options: 'i' } }
+            ]
+          }
+        : {};
 
-      const image = await axios.get(data.imageUrl, {
-        responseType: 'arraybuffer'
-      });
-
-      const imageDir = path.join(__dirname, '..', 'images');
-      if (!fs.existsSync(imageDir)) {
-        fs.mkdirSync(imageDir, { recursive: true });
-      }
-
-      const imagePath = path.join(imageDir, `${data.cardCode}.png`);
-      fs.writeFileSync(imagePath, image.data);
-
-      await Card.create({
-        cardCode: data.cardCode,
-        name: data.name,
-        rarity: data.rarity,
-        namealias: data.namealias,
-        groupalias: data.groupalias,
-        emoji: data.emoji,
-        group: data.group,
-        era: data.era,
-        batch: data.batch || null,
-        active: data.active,
-        availableQuantity: data.availableQuantity,
-        designerIds: data.designerIds,
-        localImagePath: imagePath,
-        createdBy: data.userId
-      });
+      const batches = await Batch.find(filter)
+        .sort({ code: 1 })
+        .limit(24)
+        .lean();
 
       return {
         ok: true,
         jobId,
-        cardCode: data.cardCode,
-        batch: data.batch || null
+        batches: batches.map(batch => ({
+          name: batch.name
+            ? `${batch.name} (${batch.code})`
+            : batch.code,
+          value: batch.code
+        }))
       };
     } catch (err) {
+      console.error('[BATCH AUTOCOMPLETE ERROR]', err);
+
       return {
         ok: false,
         jobId,
-        cardCode: data.cardCode,
-        error: err.message
+        batches: []
       };
     }
   }
