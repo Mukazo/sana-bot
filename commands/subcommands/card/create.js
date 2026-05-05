@@ -180,7 +180,7 @@ module.exports = {
           });
         }
 
-        return interaction.editReply({
+        return interaction.followUp({
           content: `Created \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}.`
         });
       });
