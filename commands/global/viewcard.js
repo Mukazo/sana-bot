@@ -85,26 +85,26 @@ module.exports = {
       return new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setCustomId('viewcard_first')
-          .setLabel('First')
           .setStyle(ButtonStyle.Secondary)
+          .setEmoji({ id: '1501300765065740398', name: 'doubleleft' })
           .setDisabled(page === 0),
 
         new ButtonBuilder()
           .setCustomId('viewcard_prev')
-          .setLabel('Prev')
           .setStyle(ButtonStyle.Primary)
+          .setEmoji({ id: '1501300648908423219', name: 'left' })
           .setDisabled(page === 0),
 
         new ButtonBuilder()
           .setCustomId('viewcard_next')
-          .setLabel('Next')
           .setStyle(ButtonStyle.Primary)
+          .setEmoji({ id: '1501300585293414490', name: 'right' })
           .setDisabled(page === orderedCards.length - 1),
 
         new ButtonBuilder()
           .setCustomId('viewcard_last')
-          .setLabel('Last')
           .setStyle(ButtonStyle.Secondary)
+          .setEmoji({ id: '1501300703120068678', name: 'doubleright' })
           .setDisabled(page === orderedCards.length - 1)
       );
     }
