@@ -1,12 +1,14 @@
 module.exports = async interaction => {
   if (!interaction.isButton()) return false;
 
-    if (!interaction.replied && !interaction.deferred) {
-      await interaction.reply({
-        content: 'Something went wrong.',
-        ephemeral: true,
-      }).catch(() => {});
-    }
+  // Let command-specific collectors handle these buttons
+  const collectorButtons = ['confirm', 'cancel'];
 
-    return true;
+  if (collectorButtons.includes(interaction.customId)) {
+    return false;
+  }
+
+  console.log(`Unhandled global button: ${interaction.customId}`);
+
+  return false;
 };
