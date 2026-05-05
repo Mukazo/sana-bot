@@ -3,6 +3,7 @@ const { Client, GatewayIntentBits, Events, Collection, InteractionType, Partials
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+const handleButton = require('./handlers/buttons');
 const { EmbedBuilder } = require('discord.js');
 const User = require('./models/User');
 
