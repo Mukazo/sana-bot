@@ -91,13 +91,13 @@ module.exports = {
 
         new ButtonBuilder()
           .setCustomId('viewcard_prev')
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Secondary)
           .setEmoji({ id: '1501300648908423219', name: 'left' })
           .setDisabled(page === 0),
 
         new ButtonBuilder()
           .setCustomId('viewcard_next')
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Secondary)
           .setEmoji({ id: '1501300585293414490', name: 'right' })
           .setDisabled(page === orderedCards.length - 1),
 
