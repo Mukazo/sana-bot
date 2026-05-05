@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 
 const { enqueueInteraction, listenForResults } = require('../../../queue');
+const generateRarity = require('../../utils/generateRarity');
 
 async function requestBatchChoices(interaction) {
   const focused = interaction.options.getFocused() ?? '';
@@ -193,8 +194,13 @@ module.exports = {
           });
         }
 
+        const rarityDisplay = generateRarity({
+  rarity: payload.rarity,
+  overrideEmoji: payload.emoji ?? undefined
+});
+
         return interaction.editReply({
-          content: `Created \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}.`
+          content: `Created [ ${rarityDisplay} ] - \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}`
         });
       });
 
