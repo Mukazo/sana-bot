@@ -1,5 +1,4 @@
-// src/queue.js
-const { Queue, QueueEvents } = require('bullmq');
+const { Queue, QueueEvents, Job } = require('bullmq');
 
 const connection = {
   host: process.env.REDIS_HOST,
@@ -15,19 +14,38 @@ const listeners = new Set();
 
 function listenForResults(cb) {
   listeners.add(cb);
-  return () => listeners.delete(cb); // 🔥 CRITICAL cleanup
+  return () => listeners.delete(cb);
 }
 
-queueEvents.on('completed', ({ returnvalue }) => {
-  for (const cb of listeners) cb(returnvalue);
-});
+queueEvents.on('completed', async ({ jobId }) => {
+  try {
+    const job = await Job.fromId(queue, jobId);
+    const result = await job.returnvalue;
 
-queueEvents.on('failed', ({ jobId, failedReason }) => {
-  for (const cb of listeners) {
-    cb({ ok: false, jobId, error: failedReason });
+    for (const cb of listeners) {
+      cb(result);
+    }
+  } catch (err) {
+    console.error('[QUEUE COMPLETED EVENT ERROR]', err);
   }
 });
 
+queueEvents.on('failed', async ({ jobId, failedReason }) => {
+  try {
+    const job = await Job.fromId(queue, jobId);
+    const payload = job?.data || {};
+
+    for (const cb of listeners) {
+      cb({
+        ok: false,
+        jobId: payload.jobId,
+        error: failedReason
+      });
+    }
+  } catch (err) {
+    console.error('[QUEUE FAILED EVENT ERROR]', err);
+  }
+});
 
 async function enqueueInteraction(jobName, payload) {
   return queue.add(jobName, payload, {
