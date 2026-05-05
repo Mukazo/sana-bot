@@ -27,7 +27,7 @@ timesPulled: { type: Number, default: 0 },          // counter
 });
 
 
-cardSchema.index({ version: 1, active: 1, batch: 1 });
+cardSchema.index({ rarity: 1, active: 1, batch: 1 });
 
 cardSchema.index({ group: 1 });
 cardSchema.index({ groupalias: 1 });

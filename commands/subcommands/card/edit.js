@@ -11,7 +11,7 @@ const {
 const Card = require('../../../models/Card');
 const { enqueueInteraction, listenForResults } = require('../../../queue');
 const { safeReply } = require('../../../utils/safeReply');
-const generateVersion = require('../../../utils/generateVersion');
+const generateRarity = require('../../../utils/generateRarity');
 
 const fs = require('fs');
 const path = require('path');
@@ -75,8 +75,8 @@ const cardCodeFilter = multiStr('cardcode', { exact: true });
 if (cardCodeFilter) filters.cardCode = cardCodeFilter;
 
 
-    if (interaction.options.getString('version')) {
-      filters.version = interaction.options.getString('version');
+    if (interaction.options.getString('rarity')) {
+      filters.rarity = interaction.options.getString('rarity');
     }
 
     if (Object.keys(filters).length === 0) {
@@ -104,9 +104,8 @@ if (cardCodeFilter) filters.cardCode = cardCodeFilter;
 
     if (interaction.options.getString('setname')) updates.name = interaction.options.getString('setname');
     if (interaction.options.getString('setnamealias')) updates.namealias = interaction.options.getString('setnamealias');
-    if (interaction.options.getString('setcategoryalias')) updates.categoryalias = interaction.options.getString('setcategoryalias');
-    if (interaction.options.getString('setcategory')) updates.category = interaction.options.getString('setcategory');
-    if (interaction.options.getString('setversion')) updates.version = interaction.options.getString('setversion');
+    if (interaction.options.getString('setgroupalias')) updates.groupalias = interaction.options.getString('setgroupalias');
+    if (interaction.options.getString('setrarity')) updates.rarity = interaction.options.getString('setrarity');
     if (interaction.options.getString('setemoji')) updates.emoji = interaction.options.getString('setemoji');
     if (interaction.options.getString('setgroup')) updates.group = interaction.options.getString('setgroup');
     if (interaction.options.getString('setera')) updates.era = interaction.options.getString('setera');
@@ -180,8 +179,8 @@ if (until) {
               ...cards
                 .slice(page * perPage, page * perPage + perPage)
                 .map(card => {
-                  const v = generateVersion({
-                    version: card.version,
+                  const v = generateRarity({
+                    rarity: card.rarity,
                     overrideEmoji: card.emoji,
                   });
                   return `**${v} ${card.name}** (\`${card.cardCode}\`)`;
