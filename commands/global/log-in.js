@@ -25,7 +25,7 @@ module.exports = {
           'Woah there! You have already begun your adventure with Sana~'
         )
 
-      return interaction.reply({
+      return interaction.editReply({
         embeds: [embed],
         ephemeral: true,
       });
@@ -42,7 +42,7 @@ module.exports = {
       .setColor('#ffb6c1')
       .setDescription(`## ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ Loading… \n- You have successfully landed on the adventure island! Explore further, fulfill quests and make new friends along the way! \n> <:kittokens:1501647903486116081> _Kittokens_ : **${kittyReward}** ♡ <:pawprints:1501648560700002506> _Pawprints_ : **${pawprintReward}**`)
 
-    await interaction.reply({
+    await interaction.editReply({
       embeds: [embed],
     });
   },
