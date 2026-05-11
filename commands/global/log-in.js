@@ -40,7 +40,8 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor('#ffb6c1')
-      .setDescription(`## ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ Loading… \n- You have successfully landed on the adventure island! Explore further, fulfill quests and make new friends along the way! \n> <:kittokens:1501647903486116081> _Kittokens_ : **${kittyReward}** ♡ <:pawprints:1501648560700002506> _Pawprints_ : **${pawprintReward}**`)
+      .setDescription(`## ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ Loading… \n- You have successfully landed on the adventure island! \nExplore further, fulfill quests and make new friends along the way! \n> <:kittokens:1501647903486116081> _Kittokens_ : **${kittyReward}** ♡ <:pawprints:1501648560700002506> _Pawprints_ : **${pawprintReward}**`)
+      .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
 
     await interaction.editReply({
       embeds: [embed],
