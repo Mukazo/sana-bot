@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true },
-kittokens: { type: Number, default: 1 },
-chocolates: { type: Number, default: 1 },
+kittokens: { type: Number, default: 0 },
+pawprints: { type: Number, default: 0 },
 dailystreak: {
     count: { type: Number, default: 0},
     lastClaim: { type: Date, default: null }

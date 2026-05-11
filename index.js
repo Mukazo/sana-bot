@@ -73,6 +73,15 @@ client.on(Events.InteractionCreate, async interaction => {
 
       const ephemeral = command.ephemeral === true;
 
+      if (interaction.commandName !== 'log-in') {
+        const userExists = await User.exists({ userId: interaction.user.id });
+        if (!userExists) {
+          return interaction.reply({
+            content: 'Greetings Adventurer! You must use `/log-in` before attempting any other commands.'
+          });
+        }
+      }
+
       try {
         await interaction.deferReply({ ephemeral });
         await command.execute(interaction);
