@@ -6,6 +6,29 @@ const path = require('path');
 const handleButton = require('./handlers/buttons');
 const { EmbedBuilder } = require('discord.js');
 const User = require('./models/User');
+const Maintenance = require('./models/Maintenance');
+const { startReminderPoller } = require('./utils/reminderPoller');
+
+const MAINTENANCE_BYPASS_ROLE_ID = '1496904131045228734';
+
+function buildMaintenanceEmbed(maintenance) {
+  return new EmbedBuilder()
+    .setDescription(
+      [
+        '## Sana is exhausted & now resting . . .',
+        '> All adventures in the meantime are temporarily paused.',
+        '',
+        maintenance.reason
+          ? `**Reason:** ${maintenance.reason}`
+          : '**Reason:** Ongoing maintenance.',
+        maintenance.endsAt
+          ? `**Estimated completion:** <t:${Math.floor(
+              new Date(maintenance.endsAt).getTime() / 1000
+            )}:R>`
+          : '**Estimated completion:** Unknown',
+      ].join('\n')
+    );
+}
 
 const client = new Client({
   intents: [
@@ -71,6 +94,18 @@ client.on(Events.InteractionCreate, async interaction => {
       const command = client.commands.get(interaction.commandName);
       if (!command) return;
 
+      const maintenance = await Maintenance.findOne().lean();
+
+      const hasBypassRole =
+        interaction.inGuild() &&
+        interaction.member?.roles?.cache?.has(MAINTENANCE_BYPASS_ROLE_ID);
+
+      if (maintenance?.active && !hasBypassRole) {
+        return interaction.reply({
+          embeds: [buildMaintenanceEmbed(maintenance)],
+        });
+      }
+
       const ephemeral = command.ephemeral === true;
 
       if (interaction.commandName !== 'log-in') {
@@ -116,6 +151,8 @@ client.once(Events.ClientReady, async () => {
   console.log(`Logged in as ${client.user.tag}`);
 
   global.client = client;
+
+  startReminderPoller();
 });
 
 client.login(process.env.TOKEN);
