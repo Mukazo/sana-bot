@@ -143,7 +143,7 @@ if (until) {
 
     async function renderGrid(page) {
       const slice = cards.slice(page * perPage, page * perPage + perPage);
-      const canvas = Canvas.createCanvas(slice.length * 266, 384);
+      const canvas = Canvas.createCanvas(slice.length * 275, 385);
       const ctx = canvas.getContext('2d');
 
       
@@ -156,7 +156,7 @@ if (until) {
             : path.join(__dirname, '..', 'images', 'placeholder.png');
 
         const img = await Canvas.loadImage(imgPath);
-        ctx.drawImage(img, i * 266 + 10, 0, 256, 384);
+        ctx.drawImage(img, i * 275 + 10, 0, 256, 385);
       }
 
       return canvas.toBuffer();

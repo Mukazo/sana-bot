@@ -74,7 +74,7 @@ module.exports = {
       console.timeEnd(`[summon] total ${interaction.user.id}`);
 
       return interaction.editReply({
-        content: `You can use **__summon__** again ${nextTime}!`,
+        content: `*/summon* is currently on cooldown! You can use it again ${nextTime}`,
       });
     }
 
@@ -128,9 +128,9 @@ module.exports = {
     const GAP = 15;
 
     const canvas = Canvas.createCanvas(
-      pulls.length * CARD_WIDTH + (pulls.length - 1) * GAP,
-      CARD_HEIGHT
-    );
+  pulls.length * (CARD_WIDTH + GAP),
+  CARD_HEIGHT
+);
     const ctx = canvas.getContext('2d');
 
     const loadedImages = await Promise.all(
@@ -158,7 +158,7 @@ module.exports = {
     });
 
     const cardLines = pulls.map(card => {
-      const versionEmoji = card.version || '';
+      const versionEmoji = card.version;
       const rarityEmoji = generateRarity({ rarity: card.rarity });
 
       return [

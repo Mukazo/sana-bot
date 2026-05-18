@@ -26,9 +26,9 @@ const COMMAND_DISPLAY = {
 
 // 💖 Cute mode formatter
 function formatMode(mode) {
-  if (mode === 'dm') return '<:dms:1475094115124379699>';
-  if (mode === 'channel') return '<:channel:1475094185592754397>';
-  return '<:off:1475094059390603326>';
+  if (mode === 'dm') return '<:dm:1503647696123330602>';
+  if (mode === 'channel') return '<:__:1503647732118585448>';
+  return '<:x_:1503647662157725786>';
 }
 
 module.exports = {
@@ -82,18 +82,16 @@ module.exports = {
     // 🌸 Build display
     const settingsDisplay = VALID_COMMANDS.map(cmd => {
       const current = user.reminderPreferences.get(cmd) || 'off';
-      return `⸝　${formatMode(current)}　、**${COMMAND_DISPLAY[cmd]}**`;
+      return `> ${formatMode(current)} \`${COMMAND_DISPLAY[cmd]}\``;
     }).join('\n');
 
     const embed = new EmbedBuilder()
       .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
       .setDescription([
-        '## ₍ ᐢ.ˬ.ᐢ₎ Reminder Settings',
-        'Choose where you would like your \ncooldown reminders to appear!',
+        'Choose your reminders! ⊹ ࣪ ˖',
         '',
         settingsDisplay,
-        '',
-        '-# ୨ৎ You can update a setting \nanytime using this command!'
+        ''
       ].join('\n'));
 
     return interaction.editReply({

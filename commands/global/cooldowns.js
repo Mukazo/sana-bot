@@ -43,15 +43,16 @@ module.exports = {
 
         if (expires && expires > now) {
           const unix = Math.floor(expires / 1000);
-          description += `${emoji} ─ **\`${command.toLowerCase()}\`** 𝜗𝜚 <t:${unix}:R> \n`;
+          description += `${emoji} You can use __**\`${command.toLowerCase()}\`**__ again <t:${unix}:R>! \n`;
         } else {
-          description += `${emoji} ─ **\`${command.toLowerCase()}\`** 𝜗𝜚 __**Ready**__ \n`;
+          description += `${emoji} <a:NH_pinkarrow:1479588610725384242> __**\`${command.toLowerCase()}\`**__ is ready! \n`;
         }
       }
     }
 
     const embed = new EmbedBuilder()
       .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
+      .setColor('#F2A2C0')
       .setDescription(
         [
           '### <:space:1455504212069842956> My Cooldowns',
