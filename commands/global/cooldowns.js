@@ -33,7 +33,7 @@ module.exports = {
 
         if (expires && expires > now) {
           const unix = Math.floor(expires / 1000);
-          description += `${emoji} You can use __**\`${command.toLowerCase()}\`**__ again <t:${unix}:R>! \n`;
+          description += `${emoji} You can use __**\`${command.toLowerCase()}\`**__ again <t:${unix}:R>! <a:pistawp:1505960343011201034> \n`;
         } else {
           description += `${emoji} <a:NH_pinkarrow:1505784904426848276> __**\`${command.toLowerCase()}\`**__ is ready! \n`;
         }

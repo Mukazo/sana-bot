@@ -172,7 +172,6 @@ module.exports = {
     iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
   })
       .setDescription([
-        '## Summoning 3 Cards',
         '',
         ...cardLines,
       ].join('\n'))
