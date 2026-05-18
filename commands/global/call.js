@@ -102,7 +102,8 @@ const quantity = inventory?.quantity || 1;
         `**Era** : ${card.era || 'Unknown Era'} ⋆:･.`,
         `⋆.ೃ࿔ ${rarityEmoji} : ${versionEmoji}`,
         `🌸 \`${card.cardCode}\``,
-      ].join('\n'));
+      ].join('\n'))
+      .setFooter({ text: `You now have ${quantity} copies`});
 
     const files = [];
 
