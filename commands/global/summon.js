@@ -166,6 +166,10 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
+      .setAuthor({
+    name: ownerId.username,
+    iconURL: ownerId.displayAvatarURL({ dynamic: true }),
+  })
       .setDescription([
         '## Summoning 3 Cards',
         '',

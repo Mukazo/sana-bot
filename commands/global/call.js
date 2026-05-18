@@ -92,6 +92,10 @@ const quantity = inventory?.quantity || 1;
 
     const embed = new EmbedBuilder()
       .setColor('#ffb6e5')
+      .setAuthor({
+    name: ownerId.username,
+    iconURL: ownerId.displayAvatarURL({ dynamic: true }),
+  })
       .setDescription([
         `**Idol** : ${card.name || 'Unknown'} ⋆:･.`,
         `⋆.ೃ࿔ **Group** :  __${card.group || 'Unknown Group'}__`,

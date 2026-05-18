@@ -10,7 +10,7 @@ function parseCsv(input, limit = 100) {
 }
 
 function normalize(value) {
-  return String(value || '').trim().toLowerCase();
+  return String(value || '').trim();
 }
 
 function parseNameChoices(values) {
@@ -100,11 +100,12 @@ module.exports = {
 
     if (!newGroups.length && !newNames.length && !forcedPairs.length) {
       const embed = new EmbedBuilder()
+        .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
         .setDescription([
           '### Block List ⋆˙⟡',
           '',
-          `🚫 **Groups:** ${currentGroups.length ? currentGroups.join('\n') : 'None'}`,
-          `🚫 **Names:** ${currentNames.length ? currentNames.join('\n') : 'None'} ${currentPairs.length ? currentPairs.map(p => `${p.group} + ${p.name}`).join('\n') : 'None'}`,
+          `🚫 Group: ${currentGroups.length ? currentGroups.join('\n🚫 Group:') : 'None'}`,
+          `🚫 Name: ${currentNames.length ? currentNames.join('\n 🚫 Name:') : ''} ${currentPairs.length ? currentPairs.map(p => `${p.group} + ${p.name}`).join('\n🚫 Name:') : 'None'}`,
           '',
         ].join('\n'));
 
@@ -180,11 +181,12 @@ module.exports = {
     await user.save();
 
     const embed = new EmbedBuilder()
+      .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
       .setDescription([
         '## Block List ⋆˙⟡',
         '',
-        `🚫 **Groups:** ${user.blockedPulls.groups.length ? user.blockedPulls.groups.join('\n') : 'None'}`,
-        `🚫 **Names:** ${user.blockedPulls.names.length ? user.blockedPulls.names.join('\n') : 'None'} ${user.blockedPulls.pairs.length ? user.blockedPulls.pairs.map(p => `${p.group} + ${p.name}`).join('\n') : 'None'}`,
+        `🚫 Group: ${user.blockedPulls.groups.length ? user.blockedPulls.groups.join('\n🚫 Group:') : 'None'}`,
+        `🚫 **Names:** ${user.blockedPulls.names.length ? user.blockedPulls.names.join('\n🚫 Name:') : ''} ${user.blockedPulls.pairs.length ? user.blockedPulls.pairs.map(p => `${p.group} + ${p.name}`).join('\n🚫 Name:') : 'None'}`,
         '',
       ].join('\n'));
 

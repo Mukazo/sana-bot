@@ -20,8 +20,8 @@ module.exports = async function sendReminder(reminderDoc) {
   }
 
   const embed = {
-    color: 0x2f3136,
-    description: `<:NH_remind:1479596426890575923> **__${String(command)}__** is ready!`,
+    color: 0x2FFC7EB,
+    description: `<:NH_remind:1505784856691474503> **__${String(command)}__** is ready!`,
   };
 
   // Ping outside embed

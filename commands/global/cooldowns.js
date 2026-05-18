@@ -25,7 +25,7 @@ module.exports = {
     let description = '';
 
     for (const [category, commands] of Object.entries(categories)) {
-      description += `\n## <:space:1455504212069842956>୨ **__${category}__** ୧\n`;
+      description += `\n## ୨ **__${category}__** ୧\n`;
 
       for (const command of commands) {
         const emoji = emojiMap[command] ?? '•';
@@ -35,7 +35,7 @@ module.exports = {
           const unix = Math.floor(expires / 1000);
           description += `${emoji} You can use __**\`${command.toLowerCase()}\`**__ again <t:${unix}:R>! \n`;
         } else {
-          description += `${emoji} <a:NH_pinkarrow:1479588610725384242> __**\`${command.toLowerCase()}\`**__ is ready! \n`;
+          description += `${emoji} <a:NH_pinkarrow:1505784904426848276> __**\`${command.toLowerCase()}\`**__ is ready! \n`;
         }
       }
     }
