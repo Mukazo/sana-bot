@@ -27,7 +27,7 @@ module.exports = {
 
       return interaction.editReply({
         embeds: [embed],
-        ephemeral: true,
+        flags: 1 << 6
       });
     }
 

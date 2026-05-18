@@ -3,25 +3,13 @@ const User = require('../../models/User');
 
 const VALID_COMMANDS = [
   'summon',
-  'bewitch',
-  'fortune',
-  'route',
-  'slots',
-  'daily',
-  'weekly',
-  'assemble',
+  'call',
 ];
 
 // ✨ Pretty display names (SAFE to decorate)
 const COMMAND_DISPLAY = {
-  summon: '─ Summon',
-  bewitch: '─ Bewitch',
-  fortune: '─ Fortune',
-  route: '─ Route',
-  slots: '─ Slots',
-  daily: '─ Daily',
-  weekly: '─ Weekly',
-  assemble: '─ Assemble',
+  summon: 'Summon',
+  call: 'Call',
 };
 
 // 💖 Cute mode formatter
@@ -54,7 +42,7 @@ module.exports = {
         .addChoices(
           { name: 'Off', value: 'off' },
           { name: 'DM', value: 'dm' },
-          { name: 'Channel', value: 'channel' }
+          { name: 'Ping', value: 'channel' }
         )
     ),
 
