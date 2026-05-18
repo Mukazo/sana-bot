@@ -8,6 +8,7 @@ const { EmbedBuilder } = require('discord.js');
 const User = require('./models/User');
 const Maintenance = require('./models/Maintenance');
 const { startReminderPoller } = require('./utils/reminderPoller');
+const syncCardAvailability = require('./utils/syncCardAvailability');
 
 const MAINTENANCE_BYPASS_ROLE_ID = '1496904131045228734';
 
@@ -151,6 +152,11 @@ client.once(Events.ClientReady, async () => {
   console.log(`Logged in as ${client.user.tag}`);
 
   global.client = client;
+
+  await syncCardAvailability().catch(console.error);
+  setInterval(() => {
+    syncCardAvailability().catch(console.error);
+  }, 60_000);
 
   startReminderPoller();
 });
