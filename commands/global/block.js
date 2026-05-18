@@ -105,7 +105,7 @@ module.exports = {
           '### Block List ⋆˙⟡',
           '',
           `You currently have these __Groups__ blocked.\n🚫 Group: ${currentGroups.length ? currentGroups.join('\n🚫 Group: ') : 'None'}`,
-          '\n',
+          '',
           `You currently have these __Idols__ blocked.\n🚫 Name: ${currentNames.length ? currentNames.join('\n 🚫 Name: ') : ''} ${currentPairs.length ? currentPairs.map(p => `${p.group} + ${p.name}`).join('\n🚫 Name: ') : 'None'}`,
           '',
         ].join('\n'))
@@ -188,8 +188,8 @@ module.exports = {
         '## Block List ⋆˙⟡',
         '',
         `You currently have these __Groups__ blocked.\n🚫 Group: ${user.blockedPulls.groups.length ? user.blockedPulls.groups.join('\n🚫 Group: ') : 'None'}`,
-        '\n',
-        `You currently have these __Groups__ blocked.\n🚫 **Names:** ${user.blockedPulls.names.length ? user.blockedPulls.names.join('\n🚫 Name: ') : ''} ${user.blockedPulls.pairs.length ? user.blockedPulls.pairs.map(p => `${p.group} + ${p.name}`).join('\n🚫 Name: ') : 'None'}`,
+        '',
+        `You currently have these __Idols__ blocked.\n🚫 **Names:** ${user.blockedPulls.names.length ? user.blockedPulls.names.join('\n🚫 Name: ') : ''} ${user.blockedPulls.pairs.length ? user.blockedPulls.pairs.map(p => `${p.group} + ${p.name}`).join('\n🚫 Name: ') : 'None'}`,
         '',
       ].join('\n'))
       .setFooter({ text: `You can change these settings anytime!`});
