@@ -45,7 +45,7 @@ module.exports = {
       .setColor('#F2A2C0')
       .setDescription(
         [
-          '### <:space:1455504212069842956> My Cooldowns',
+          '### ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ My Cooldowns',
           '',
           '',
           description,

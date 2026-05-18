@@ -166,7 +166,7 @@ module.exports = {
     });
 
     const embed = new EmbedBuilder()
-      .setColor('#F43A38')
+      .setColor('#D8D8D8')
       .setAuthor({
     name: interaction.user.username,
     iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
