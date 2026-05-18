@@ -10,7 +10,7 @@ const {
 const Canvas = require('canvas');
 
 const randomCardFromRarity = require('../../utils/randomCardFromRarity');
-const pickRarity = require('../../utils/pickRarity');
+const pickRarity = require('../../utils/rarityPicker');
 const cooldowns = require('../../utils/cooldownManager');
 const generateRarity = require('../../utils/generateRarity');
 const handleReminders = require('../../utils/reminderHandler');
