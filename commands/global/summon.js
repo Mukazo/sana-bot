@@ -167,8 +167,8 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setAuthor({
-    name: ownerId.username,
-    iconURL: ownerId.displayAvatarURL({ dynamic: true }),
+    name: interaction.user.username,
+    iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
   })
       .setDescription([
         '## Summoning 3 Cards',

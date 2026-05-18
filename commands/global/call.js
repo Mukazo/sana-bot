@@ -93,8 +93,8 @@ const quantity = inventory?.quantity || 1;
     const embed = new EmbedBuilder()
       .setColor('#ffb6e5')
       .setAuthor({
-    name: ownerId.username,
-    iconURL: ownerId.displayAvatarURL({ dynamic: true }),
+    name: interaction.user.username,
+    iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
   })
       .setDescription([
         `**Idol** : ${card.name || 'Unknown'} ⋆:･.`,
