@@ -104,7 +104,7 @@ if (cardCodeFilter) filters.cardCode = cardCodeFilter;
     if (interaction.options.getString('setnamealias')) updates.namealias = interaction.options.getString('setnamealias');
     if (interaction.options.getString('setgroupalias')) updates.groupalias = interaction.options.getString('setgroupalias');
     if (interaction.options.getString('setrarity')) updates.rarity = interaction.options.getString('setrarity');
-    if (interaction.options.getString('setversion')) updates.rarity = interaction.options.getString('setversion');
+    if (interaction.options.getString('setversion')) updates.version = interaction.options.getString('setversion');
     if (interaction.options.getString('setemoji')) updates.emoji = interaction.options.getString('setemoji');
     if (interaction.options.getString('setgroup')) updates.group = interaction.options.getString('setgroup');
     if (interaction.options.getString('setera')) updates.era = interaction.options.getString('setera');
@@ -199,8 +199,8 @@ if (until) {
       new ActionRowBuilder().addComponents(
         new ButtonBuilder().setCustomId('prev').setLabel('⬅').setStyle(ButtonStyle.Secondary).setDisabled(disabled || page === 0),
         new ButtonBuilder().setCustomId('next').setLabel('➡').setStyle(ButtonStyle.Secondary).setDisabled(disabled || page === totalPages - 1),
-        new ButtonBuilder().setCustomId('confirm').setLabel('<:NH_checkmark:1436400971977851094>').setStyle(ButtonStyle.Success).setDisabled(disabled),
-        new ButtonBuilder().setCustomId('cancel').setLabel('<:NH_x:1436401046292402351>').setStyle(ButtonStyle.Danger).setDisabled(disabled)
+        new ButtonBuilder().setCustomId('confirm').setEmoji('<:NH_checkmark:1436400971977851094>').setStyle(ButtonStyle.Success).setDisabled(disabled),
+        new ButtonBuilder().setCustomId('cancel').setEmoji('<:NH_x:1436401046292402351>').setStyle(ButtonStyle.Danger).setDisabled(disabled)
       ),
     ];
 
