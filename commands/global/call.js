@@ -79,7 +79,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor('#ffb6e5')
       .setDescription([
-        `**Idol** : **${card.name || 'Unknown'}** ⋆:･.`,
+        `**Idol** : ${card.name || 'Unknown'} ⋆:･.`,
         `⋆.ೃ࿔ **Group** :  __${card.group || 'Unknown Group'}__`,
         `**Era** : ${card.era || 'Unknown Era'} ⋆:･.`,
         `⋆.ೃ࿔ ${rarityEmoji} : ${versionEmoji}`,
