@@ -25,7 +25,7 @@ module.exports = async function sendReminder(reminderDoc) {
   };
 
   // Ping outside embed
-  const content = `<@${userId}>`;
+  const content = `-# <@${userId}>`;
 
   // Channel mode: try channel, fallback to DM if channel fails/not available
   if (mode === 'channel' && channelId) {

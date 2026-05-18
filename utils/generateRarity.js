@@ -5,7 +5,7 @@ module.exports = function generateRarity({ rarity = 'Common' }) {
     common: '<:common:1500053687941464104>',
     rare: '<:rare:1500053749656453240>',
     ultra: '<:ultra:1500053798742261881>',
-    epic: '<:twirlsaround:1496905414120570961>',
+    epic: '<:epic:1505252146344497322>',
     special: '<:sulk:1496905608731824278>',
     mythic: '<:tt_blush:1496905353911079044>',
     celestial: '<:Yippeeyay:1496905291298504754>'
