@@ -64,6 +64,9 @@ module.exports = {
         .addStringOption(opt => opt.setName('setemoji').setDescription('New emoji'))
         .addStringOption(opt => opt.setName('setversion').setDescription('New card version'))
         .addStringOption(opt => opt.setName('setnamealias').setDescription('new alternate name of card'))
+        .addUserOption(opt => opt.setName('designer').setDescription('Set new designer'))
+        .addUserOption(opt => opt.setName('designer2').setDescription('Set optional second designer'))
+        .addUserOption(opt => opt.setName('designer3').setDescription('Set optional third designer'))
         .addStringOption(opt => opt.setName('setgroupalias').setDescription('new alternate group of card'))
         .addStringOption(opt =>
           opt.setName('setbatch')

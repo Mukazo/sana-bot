@@ -9,6 +9,7 @@ const pickRarity = require('../../utils/rarityPicker');
 const cooldowns = require('../../utils/cooldownManager');
 const generateRarity = require('../../utils/generateRarity');
 const handleReminders = require('../../utils/reminderHandler');
+const CardInventory = require('../../models/CardInventory');
 
 const User = require('../../models/User');
 
@@ -72,6 +73,19 @@ module.exports = {
         content: 'No eligible card was available to call.',
       });
     }
+
+    await CardInventory.updateOne(
+  { userId: ownerId, cardCode: card.cardCode },
+  { $inc: { quantity: 1 } },
+  { upsert: true }
+);
+
+const inventory = await CardInventory.findOne({
+  userId: ownerId,
+  cardCode: card.cardCode,
+});
+
+const quantity = inventory?.quantity || 1;
 
     const rarityEmoji = generateRarity({ rarity: card.rarity });
     const versionEmoji = card.version || 'Unknown';
