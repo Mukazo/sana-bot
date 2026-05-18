@@ -20,7 +20,7 @@ module.exports = async function sendReminder(reminderDoc) {
   }
 
   const embed = {
-    color: 0x2FFC7EB,
+    color: 0xFFC7EB,
     description: `<:NH_remind:1505784856691474503> **__${String(command)}__** is ready!`,
   };
 
