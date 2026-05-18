@@ -23,6 +23,7 @@ function buildPullFilter(rarity, user) {
   return {
     rarity,
     active: true,
+    batch: null,
     $and: [
       {
         $or: [
