@@ -47,6 +47,7 @@ module.exports = {
         emoji: data.emoji,
         group: data.group,
         era: data.era,
+        version: data.version,
         batch: data.batch || null,
         active: data.active,
         availableQuantity: data.availableQuantity,

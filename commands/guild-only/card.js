@@ -33,8 +33,9 @@ module.exports = {
         .addStringOption(opt =>
           opt.setName('batch')
             .setDescription('batch code')
-            .setRequired(false)
+            .setRequired(true)
             .setAutocomplete(true))
+        .addStringOption(opt => opt.setName('version').setDescription('card version').setRequired(true))
         .addStringOption(opt => opt.setName('era').setDescription('era of card').setRequired(false))
         .addStringOption(opt => opt.setName('emoji').setDescription('optional card emoji').setRequired(false))
         .addUserOption(opt => opt.setName('designer2').setDescription('optional second designer').setRequired(false))
@@ -61,6 +62,7 @@ module.exports = {
         .addStringOption(opt => opt.setName('setera').setDescription('New era'))
         .addStringOption(opt => opt.setName('setrarity').setDescription('New rarity'))
         .addStringOption(opt => opt.setName('setemoji').setDescription('New emoji'))
+        .addStringOption(opt => opt.setName('setversion').setDescription('New card version'))
         .addStringOption(opt => opt.setName('setnamealias').setDescription('new alternate name of card'))
         .addStringOption(opt => opt.setName('setgroupalias').setDescription('new alternate group of card'))
         .addStringOption(opt =>

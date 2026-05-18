@@ -8,6 +8,7 @@ const cardSchema = new mongoose.Schema({
     rarity: {type: String, required: true},
     active: {type: Boolean, required: true},
     emoji: {type: String},
+    version: {type: String},
     era: { type: String },                                    // Era or expansion tag
   batch: {
   type: String,
@@ -33,6 +34,7 @@ cardSchema.index({ group: 1 });
 cardSchema.index({ groupalias: 1 });
 cardSchema.index({ name: 1 });
 cardSchema.index({ era: 1 });
+cardSchema.index({ version: 1 });
 
 cardSchema.index({ releaseAt: 1 });
 cardSchema.index({ deactivateAt: 1 });

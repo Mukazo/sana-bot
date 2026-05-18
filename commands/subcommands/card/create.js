@@ -71,6 +71,7 @@ module.exports = {
       groupalias: opts.getString('groupalias'),
       era: opts.getString('era'),
       emoji: opts.getString('emoji'),
+      version: opts.getString('version'),
       active: opts.getBoolean('active'),
       availableQuantity: opts.getInteger('availablequantity'),
       imageUrl: opts.getAttachment('image').url,
@@ -93,6 +94,7 @@ module.exports = {
         { name: 'Batch', value: payload.batch ?? 'No Batch', inline: true },
         { name: 'Era', value: payload.era ?? '—', inline: true },
         { name: 'Active', value: String(payload.active), inline: true },
+        { name: 'Version', value: payload.version ?? '—', inline: true },
         { name: 'Name Alias', value: payload.namealias ?? '—', inline: true },
         { name: 'Group Alias', value: payload.groupalias ?? '—', inline: true },
         {
