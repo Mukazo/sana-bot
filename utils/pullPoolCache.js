@@ -46,7 +46,7 @@ async function buildPool(rarity, user) {
 
   const cards = await Card.find(filter)
     .select(
-      'cardCode era group name rarity emoji localImagePath designerIds discordPermalinkImage imgurImageLink'
+      'cardCode era group name rarity version emoji localImagePath designerIds discordPermalinkImage imgurImageLink'
     )
     .lean();
 

@@ -82,13 +82,13 @@ module.exports = {
     // 🌸 Build display
     const settingsDisplay = VALID_COMMANDS.map(cmd => {
       const current = user.reminderPreferences.get(cmd) || 'off';
-      return `> ${formatMode(current)} \`${COMMAND_DISPLAY[cmd]}\``;
+      return `> ${formatMode(current)} \`${COMMAND_DISPLAY[cmd]}\`\n`;
     }).join('\n');
 
     const embed = new EmbedBuilder()
       .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
       .setDescription([
-        'Choose your reminders! ⊹ ࣪ ˖',
+        '## Choose your reminders! ⊹ ࣪ ˖',
         '',
         settingsDisplay,
         ''

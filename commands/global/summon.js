@@ -123,8 +123,8 @@ module.exports = {
 
     const ownedSet = new Set(owned.map(card => card.cardCode));
 
-    const CARD_WIDTH = 360;
-    const CARD_HEIGHT = 480;
+    const CARD_WIDTH = 380;
+    const CARD_HEIGHT = 500;
     const GAP = 15;
 
     const canvas = Canvas.createCanvas(
