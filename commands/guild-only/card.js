@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const createCard = require('../subcommands/card/create.js');
 const editCard = require('../subcommands/card/edit.js');
 
@@ -6,7 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('card')
     .setDescription('Manage cards')
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
+    .setDefaultMemberPermissions('0')
     .addSubcommand(sub =>
       sub.setName('create')
         .setDescription('create a card')
