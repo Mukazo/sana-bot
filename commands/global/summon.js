@@ -14,7 +14,6 @@ const pickRarity = require('../../utils/rarityPicker');
 const cooldowns = require('../../utils/cooldownManager');
 const generateRarity = require('../../utils/generateRarity');
 const handleReminders = require('../../utils/reminderHandler');
-const { emitQuestEvent } = require('../../utils/quest/tracker');
 
 const CardInventory = require('../../models/CardInventory');
 const SummonSession = require('../../models/SummonSession');
@@ -189,15 +188,6 @@ module.exports = {
       files: [attachment],
       components: [row],
     });
-
-    await emitQuestEvent(
-      interaction.user.id,
-      {
-        type: 'command',
-        commandName: 'summon',
-      },
-      interaction
-    );
 
     await handleReminders(interaction, 'summon', cooldownMs);
 
