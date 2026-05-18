@@ -124,8 +124,8 @@ module.exports = {
         .setDescription([
           '## Block List Cleared ⋆˙⟡',
           '',
-          '> Groups: None',
-          '> Names: None',
+          '> **Groups:** None',
+          '> **Names:** None',
           '',
         ].join('\n'))
         .setFooter({
@@ -186,21 +186,21 @@ module.exports = {
       .setDescription([
         '## Block List Updated ⋆˙⟡',
         '',
-        `You currently have these __Groups__ blocked.\n🚫 Group: ${
+        `You currently have these __Groups__ blocked.\n🚫 **Group:** ${
           user.blockedPulls.groups.length
-            ? user.blockedPulls.groups.join('\n🚫 Group: ')
+            ? user.blockedPulls.groups.join('\n🚫 **Group:** ')
             : 'None'
         }`,
         '',
-        `You currently have these __Idols__ blocked.\n🚫 Name: ${
+        `You currently have these __Idols__ blocked.\n🚫 **Name:** ${
           user.blockedPulls.names.length
-            ? user.blockedPulls.names.join('\n🚫 Name: ')
+            ? user.blockedPulls.names.join('\n🚫 **Name:** ')
             : ''
         } ${
           user.blockedPulls.pairs.length
             ? user.blockedPulls.pairs
                 .map(p => `${p.group} + ${p.name}`)
-                .join('\n🚫 Name: ')
+                .join('\n🚫 **Name:** ')
             : 'None'
         }`,
         '',
