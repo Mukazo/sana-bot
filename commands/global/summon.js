@@ -123,7 +123,7 @@ module.exports = {
 
     const ownedSet = new Set(owned.map(card => card.cardCode));
 
-    const CARD_WIDTH = 320;
+    const CARD_WIDTH = 360;
     const CARD_HEIGHT = 480;
     const GAP = 15;
 
@@ -158,11 +158,10 @@ module.exports = {
     });
 
     const cardLines = pulls.map(card => {
-      const versionEmoji = card.version;
       const rarityEmoji = generateRarity({ rarity: card.rarity });
 
       return [
-        `💌 (${versionEmoji}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``,
+        `💌 (${card.version}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``,
       ].join(' ');
     });
 
