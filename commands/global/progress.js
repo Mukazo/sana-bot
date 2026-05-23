@@ -193,23 +193,29 @@ const rarityFilter = rarityInput
 
     const getEmbed = () => {
       return new EmbedBuilder()
+        .setColor('#E8A6E1')
         .setDescription([
-          `### ۰ ${interaction.user}'s Collection`,
-          ` **Ი︵𐑼** __Owned:__ ${owned} / __Available:__ ${total}`,
-          `<:space:1455504212069842956><:space:1455504212069842956><:space:1455504212069842956><:space:1455504212069842956>__Total Copies:__ ${totalCopies}`,
+          `⤷ ゛__Filters__: ${
+  [
+    groupInput,
+    nameInput,
+    eraInput,
+    rarityInput,
+    versionInput,
+  ]
+    .filter(Boolean)
+    .join(' • ') || ''
+} ˎˊ˗`,
+          `*Available* : ${total} | *Owned* : ${owned}`,
           '',
-          groupInput && `**Groups:** ${groupInput}`,
-          nameInput && `**Names:** ${nameInput}`,
-          eraInput && `**Eras:** ${eraInput}`,
-          versionInput && `**Versions:** ${versionInput}`,
         ].filter(Boolean).join('\n'))
         .setImage('attachment://collection.png')
         .setFooter({ text: `Page ${page + 1} / ${maxPage + 1}` });
     };
 
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('prev').setLabel(' • Previous').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId('next').setLabel('Next • ').setStyle(ButtonStyle.Secondary)
+      new ButtonBuilder().setCustomId('prev').setEmoji({ id: '1501300648908423219', name: 'left' }).setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('next').setEmoji({ id: '1501300585293414490', name: 'right' }).setStyle(ButtonStyle.Secondary)
     );
 
     let attachment = await buildCanvasPage();
