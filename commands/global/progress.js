@@ -66,13 +66,6 @@ const rarityFilter = rarityInput
   ? parseList(rarityInput)
   : ['Common', 'Rare', 'Ultra', 'Epic', 'Special', 'Mythic'];
 
-    if (!groupFilter.length && !nameFilter.length && !eraFilter.length) {
-      return interaction.editReply({
-        content: 'You must provide at least one filter: **group**, **name**, or **era**.',
-        ephemeral: true
-      });
-    }
-
     const versionFilter = versionInput
       ? versionInput.split(',').map(v => Number(v.trim())).filter(n => Number.isFinite(n))
       : [1, 2, 3, 4, 5];
