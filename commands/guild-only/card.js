@@ -35,7 +35,11 @@ module.exports = {
             .setDescription('batch code')
             .setRequired(true)
             .setAutocomplete(true))
-        .addStringOption(opt => opt.setName('version').setDescription('card version').setRequired(true))
+        .addStringOption(opt => opt.setName('version').setDescription('card version').setRequired(true).addChoices(
+              { name: 'Version 1', value: '1' },
+              { name: 'Version 2', value: '2' },
+              { name: 'Version 3', value: '3' },
+            ))
         .addStringOption(opt => opt.setName('era').setDescription('era of card').setRequired(false))
         .addStringOption(opt => opt.setName('emoji').setDescription('optional card emoji').setRequired(false))
         .addUserOption(opt => opt.setName('designer2').setDescription('optional second designer').setRequired(false))

@@ -13,6 +13,7 @@ const randomCardFromRarity = require('../../utils/randomCardFromRarity');
 const pickRarity = require('../../utils/rarityPicker');
 const cooldowns = require('../../utils/cooldownManager');
 const generateRarity = require('../../utils/generateRarity');
+const generateVersion = require('../../utils/generateVersion');
 const handleReminders = require('../../utils/reminderHandler');
 
 const CardInventory = require('../../models/CardInventory');
@@ -159,9 +160,10 @@ module.exports = {
 
     const cardLines = pulls.map(card => {
       const rarityEmoji = generateRarity({ rarity: card.rarity });
+      const versionEmoji = generateVersion({ version: card.version });
 
       return [
-        `💌 (${card.version}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``,
+        `💌 (${versionEmoji}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``,
       ].join(' ');
     });
 

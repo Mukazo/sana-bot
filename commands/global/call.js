@@ -8,6 +8,7 @@ const randomCardFromRarity = require('../../utils/randomCardFromRarity');
 const pickRarity = require('../../utils/rarityPicker');
 const cooldowns = require('../../utils/cooldownManager');
 const generateRarity = require('../../utils/generateRarity');
+const generateVersion = require('../../utils/generateVersion');
 const handleReminders = require('../../utils/reminderHandler');
 const CardInventory = require('../../models/CardInventory');
 
@@ -88,7 +89,7 @@ const inventory = await CardInventory.findOne({
 const quantity = inventory?.quantity || 1;
 
     const rarityEmoji = generateRarity({ rarity: card.rarity });
-    const versionEmoji = card.version || 'Unknown';
+    const versionEmoji = generateVersion({ version: card.version });
 
     const embed = new EmbedBuilder()
       .setColor('#ffb6e5')

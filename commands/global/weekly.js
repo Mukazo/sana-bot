@@ -10,6 +10,7 @@ const CardInventory = require('../../models/CardInventory');
 const randomCardFromRarity = require('../../utils/randomCardFromRarity');
 const pickRarity = require('../../utils/rarityPicker');
 const generateRarity = require('../../utils/generateRarity');
+const generateVersion = require('../../utils/generateVersion');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -139,9 +140,10 @@ module.exports = {
 
     const cardLines = pulledCards.map((card, index) => {
       const rarityEmoji = generateRarity({ rarity: card.rarity });
+      const versionEmoji = generateRarity({ version: card.version });
       const guaranteed = index === 0 ? '' : '';
 
-      return `(${card.version}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``;
+      return `(${versionEmoji}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``;
     });
 
     const embed = new EmbedBuilder()

@@ -10,6 +10,7 @@ const {
 
 const Card = require('../../models/Card');
 const generateRarity = require('../../utils/generateRarity');
+const generateVersion = require('../../utils/generateVersion');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -58,13 +59,17 @@ module.exports = {
         overrideEmoji: card.emoji ?? undefined
       });
 
+      const versionDisplay = generateVersion({
+        version: card.version,
+      });
+
       const designers = Array.isArray(card.designerIds) && card.designerIds.length
         ? card.designerIds.map(id => `<@${id}>`).join(', ')
         : 'Unknown';
 
       const embed = new EmbedBuilder()
         .setColor(0xE8D0A1)
-        .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡\n︵︵ __${card.era}__ ⟡﹐\n✨ ﹒ ┈ ﹕${rarityDisplay} | ${card.version} ﹒ ᶻᶻ ﹒\n-# ¦ made by : ${designers}`)
+        .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡\n︵︵ __${card.era}__ ⟡﹐\n✨ ﹒ ┈ ﹕${rarityDisplay} | ${versionDisplay} ﹒ ᶻᶻ ﹒\n-# ¦ made by : ${designers}`)
         .setFooter({
           text: `Page ${index + 1} of ${orderedCards.length}`
         });
