@@ -90,7 +90,7 @@ module.exports = {
       .setDescription([
         '## ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ Daily',
         '- **My Melody** <:melodysmile:1502029168492286134> has been waiting for ur return! Get ready for new quests and most importantly friends! .ೀ',
-        `> :kittokens: Kittokens : **${reward.kittokens.toLocaleString()}** ♡ :pawprints: Pawprints : **${reward.pawprints}**`,
+        `> <:kittokens:1501647903486116081> Kittokens : **${reward.kittokens.toLocaleString()}** ♡ <:pawprints:1501648560700002506> Pawprints : **${reward.pawprints}**`,
         `~ Streak increased to ${streak} days! <:pinkfire:1502212161596948512>`,
         '',
       ].join('\n'));
