@@ -23,7 +23,7 @@ module.exports = {
               { name: 'Epic', value: 'Epic' },
               { name: 'Special', value: 'Special' },
               { name: 'Mythic', value: 'Mythic' },
-              { name: 'Celestial', value: 'Celestial' }
+              { name: 'Prestige', value: 'Prestige' }
             ))
         .addStringOption(opt => opt.setName('group').setDescription('group of card').setRequired(true))
         .addStringOption(opt => opt.setName('name').setDescription('name of card').setRequired(true))

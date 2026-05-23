@@ -5,6 +5,7 @@ module.exports = {
   Call: 2 * 60 * 1000,
   Daily: 24 * 60 * 60 * 1000,
   Weekly: 7 * 24 * 60 * 60 * 1000,
+  'Pick-Up': 15 * 60 * 1000,
 
   Assemble: {
     default: 25 * 60 * 1000,
