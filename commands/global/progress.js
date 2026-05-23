@@ -159,7 +159,7 @@ const rarityFilter = rarityInput
     const buildCanvasPage = async () => {
       const pageCards = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
       const perRow = 5;
-      const cardW = 220;
+      const cardW = 250;
       const cardH = 300;
       const padding = 10;
       const rows = Math.ceil(pageCards.length / perRow);
@@ -193,6 +193,10 @@ const rarityFilter = rarityInput
 
     const getEmbed = () => {
       return new EmbedBuilder()
+        .setAuthor({
+    name: interaction.user.username,
+    iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+  })
         .setColor('#E8A6E1')
         .setDescription([
           `⤷ ゛__Filters__: ${
@@ -206,7 +210,7 @@ const rarityFilter = rarityInput
     .filter(Boolean)
     .join(' • ') || ''
 } ˎˊ˗`,
-          `*Available* : ${total} | *Owned* : ${owned}`,
+          `<:space:1507617262691942431>*Available* : **${total}** | *Owned* : **${owned}**`,
           '',
         ].filter(Boolean).join('\n'))
         .setImage('attachment://collection.png')
