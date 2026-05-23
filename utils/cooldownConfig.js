@@ -3,6 +3,7 @@
 module.exports = {
   Summon: 5 * 60 * 1000,
   Call: 2 * 60 * 1000,
+  Daily: 24 * 60 * 60 * 1000,
 
   Assemble: {
     default: 25 * 60 * 1000,

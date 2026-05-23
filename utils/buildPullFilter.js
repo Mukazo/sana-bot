@@ -13,13 +13,6 @@ function buildPullFilter(rarity, user) {
 
   const blockedPairs = user?.blockedPulls?.pairs || [];
 
-  const alwaysInclude = ['specials'];
-  const prefs = user?.enabledCategories ?? [];
-
-  const categories = prefs.length
-    ? [...new Set([...prefs, ...alwaysInclude])]
-    : undefined;
-
   return {
     rarity,
     active: true,
@@ -37,22 +30,7 @@ function buildPullFilter(rarity, user) {
           { $expr: { $lt: ['$timesPulled', '$availableQuantity'] } },
         ],
       },
-
-      ...(categories
-        ? [
-            {
-              $or: [
-                { category: { $in: categories } },
-                { categoryalias: { $in: categories } },
-              ],
-            },
-          ]
-        : [
-            {
-              categoryalias: { $exists: false },
-            },
-          ]),
-
+      
       ...(blockedGroups.length
         ? [
             {
