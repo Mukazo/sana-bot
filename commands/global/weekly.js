@@ -14,7 +14,7 @@ const generateRarity = require('../../utils/generateRarity');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('weekly')
-    .setDescription('Claim your weekly rewards'),
+    .setDescription('Weekly journeys lead to gracious rewards'),
 
   async execute(interaction) {
     const userId = interaction.user.id;
