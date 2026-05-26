@@ -11,6 +11,7 @@ const {
 const Card = require('../../models/Card');
 const generateRarity = require('../../utils/generateRarity');
 const generateVersion = require('../../utils/generateVersion');
+const CardInventory = require('../../models/CardInventory');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -49,6 +50,24 @@ module.exports = {
       .map(code => cardMap.get(code))
       .filter(Boolean);
 
+      const inventoryCounts = await CardInventory.aggregate([
+  {
+    $match: {
+      cardCode: { $in: orderedCards.map(card => card.cardCode) }
+    }
+  },
+  {
+    $group: {
+      _id: '$cardCode',
+      total: { $sum: '$quantity' }
+    }
+  }
+]);
+
+const totalCopiesMap = new Map(
+  inventoryCounts.map(item => [item._id, item.total])
+);
+
     let page = 0;
 
     function buildPage(index) {
@@ -71,8 +90,8 @@ module.exports = {
         .setColor(0xE8D0A1)
         .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡\n︵︵ __${card.era}__ ⟡﹐\n✨ ﹒ ┈ ﹕${rarityDisplay} | ${versionDisplay} ﹒ ᶻᶻ ﹒\n-# ¦ made by : ${designers}`)
         .setFooter({
-          text: `Page ${index + 1} of ${orderedCards.length}`
-        });
+  text: `Page ${index + 1} of ${orderedCards.length} • Copies Owned: ${totalCopiesMap.get(card.cardCode) || 0}`,
+});
 
       let attachment = null;
       if (card.localImagePath) {

@@ -230,6 +230,10 @@ if (rarities.length) {
     let page = 0;
     let sortMode = 'default';
 
+    const totalInventoryCopies = targetInv.reduce((sum, item) => {
+  return sum + (item.quantity || 0);
+}, 0);
+
     const getEmbed = () => {
   const slice = results.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
@@ -240,8 +244,8 @@ if (rarities.length) {
     iconURL: targetUser.displayAvatarURL({ dynamic: true }),
   })
     .setFooter({
-      text: `Page ${page + 1} / ${Math.max(1, Math.ceil(results.length / PAGE_SIZE))}`,
-    });
+  text: `Page ${page + 1} / ${Math.max(1, Math.ceil(results.length / PAGE_SIZE))} • Total Cards: ${totalInventoryCopies}`,
+});
 
   const fields = slice.map(card => {
     const viewerQty = viewerMap.get(card.cardCode) || 0;
@@ -254,13 +258,14 @@ if (rarities.length) {
     }
 
     const rarityEmoji = generateRarity({ rarity: card.rarity });
-        const versionEmoji = generateVersion({ version: card.version });
+    const versionEmoji = generateVersion({ version: card.version });
 
     return {
       name: ``,
       value: [
         `${rarityEmoji} **${card.name || 'Unknown'}** | ${card.group || 'Unknown'}`,
-        card.era ? `__${card.era}__` : null `**${versionEmoji}**`,
+        card.era ? `__${card.era}__` : null,
+        versionEmoji,
         `\`${card.cardCode}\` x__**${targetQty}**__ ${compareEmoji}`,
         '⋆˙⟡ —————— ⋆˙⟡',
       ].filter(Boolean).join('\n'),
