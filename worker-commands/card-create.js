@@ -38,6 +38,13 @@ module.exports = {
 
       fs.writeFileSync(imagePath, image.data);
 
+      const rawBatch = typeof data.batch === 'string' ? data.batch.trim() : data.batch;
+
+const batch =
+  rawBatch && !['null', 'no batch', 'none'].includes(String(rawBatch).toLowerCase())
+    ? rawBatch
+    : null;
+
       await Card.create({
         cardCode: data.cardCode,
         name: data.name,
@@ -46,6 +53,7 @@ module.exports = {
         groupalias: data.groupalias,
         emoji: data.emoji,
         group: data.group,
+        batch,
         era: data.era,
         version: data.version,
         batch: data.batch || null,

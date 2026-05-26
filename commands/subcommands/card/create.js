@@ -60,13 +60,19 @@ module.exports = {
 
     const opts = interaction.options;
     const selectedBatch = opts.getString('batch');
+const normalizedBatch = selectedBatch?.trim().toLowerCase();
+
+const batch =
+  selectedBatch && !['null', 'no batch', 'none'].includes(normalizedBatch)
+    ? selectedBatch.trim()
+    : null;
 
     const payload = {
       cardCode: opts.getString('cardcode'),
       name: opts.getString('name'),
       rarity: opts.getString('rarity'),
       group: opts.getString('group'),
-      batch: selectedBatch && selectedBatch !== 'null' ? selectedBatch : null,
+      batch,
       namealias: opts.getString('namealias'),
       groupalias: opts.getString('groupalias'),
       era: opts.getString('era'),
@@ -196,13 +202,10 @@ module.exports = {
           });
         }
 
-        const rarityDisplay = generateRarity({
-  rarity: payload.rarity,
-  overrideEmoji: payload.emoji ?? undefined
-});
+const emoji = payload.rarity || generateVersion(payload);
 
         return interaction.editReply({
-          content: `Created [ ${rarityDisplay} ] - \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}`
+          content: `Created [ ${emoji} ] - \`${result.cardCode}\`${payload.batch ? ` in batch \`${payload.batch}\`` : ''}`
         });
       });
 
