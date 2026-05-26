@@ -73,9 +73,9 @@ module.exports = {
         .setDescription('options')
         .setRequired(true)
         .addChoices(
-          { name: 'Owned Cards', value: 'owned' },
-          { name: 'Duplicate Cards', value: 'duplicates' },
-          { name: 'Missing Cards', value: 'missing' },
+          { name: 'Owned', value: 'owned' },
+          { name: 'Duplicates', value: 'duplicates' },
+          { name: 'Missing', value: 'missing' },
         )
     )
     .addUserOption(o =>
@@ -255,18 +255,13 @@ if (rarities.length) {
       else if (viewerQty > 0 && targetQty === 0) compareEmoji = YOU_HAVE_EMOJI;
     }
 
-    const rarityDisplay = generateRarity({
-            rarity: card.rarity,
-          });
-    
-          const versionDisplay = generateVersion({
-            version: card.version,
-          });
+    const rarityEmoji = generateRarity({ rarity: card.rarity });
+        const versionEmoji = generateVersion({ version: card.version });
 
     return {
-      name: `${rarityDisplay} ${card.group || 'Unknown'} — ${card.name || 'Unknown'}`,
+      name: `${rarityEmoji} ${card.group || 'Unknown'} — ${card.name || 'Unknown'}`,
       value: [
-        card.era ? `__${card.era}__` : null `**${versionDisplay}**`,
+        card.era ? `__${card.era}__` : null `**${versionEmoji}**`,
         `\`${card.cardCode}\` x**${targetQty}** ${compareEmoji}`,
       ].filter(Boolean).join('\n'),
       inline: true,
