@@ -238,7 +238,7 @@ if (rarities.length) {
   const slice = results.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   const embed = new EmbedBuilder()
-    .setColor('#E8A6E1')
+    .setColor('#E595AC')
     .setAuthor({
     name: targetUser.username,
     iconURL: targetUser.displayAvatarURL({ dynamic: true }),
