@@ -235,12 +235,10 @@ if (rarities.length) {
 
   const embed = new EmbedBuilder()
     .setColor('#E8A6E1')
-    .setDescription([
-      viewerId === targetId
-        ? `# ${interaction.user.username}'s Inventory`
-        : `# ${targetUser.username}'s Inventory`,
-      '',
-    ].join('\n'))
+    .setAuthor({
+    name: targetUser.username,
+    iconURL: targetUser.displayAvatarURL({ dynamic: true }),
+  })
     .setFooter({
       text: `Page ${page + 1} / ${Math.max(1, Math.ceil(results.length / PAGE_SIZE))}`,
     });
@@ -259,10 +257,12 @@ if (rarities.length) {
         const versionEmoji = generateVersion({ version: card.version });
 
     return {
-      name: `${rarityEmoji} ${card.group || 'Unknown'} — ${card.name || 'Unknown'}`,
+      name: ``,
       value: [
+        `${rarityEmoji} **${card.name || 'Unknown'}** | ${card.group || 'Unknown'}`,
         card.era ? `__${card.era}__` : null `**${versionEmoji}**`,
-        `\`${card.cardCode}\` x**${targetQty}** ${compareEmoji}`,
+        `\`${card.cardCode}\` x__**${targetQty}**__ ${compareEmoji}`,
+        '⋆˙⟡ —————— ⋆˙⟡',
       ].filter(Boolean).join('\n'),
       inline: true,
     };
