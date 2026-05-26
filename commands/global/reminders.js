@@ -13,7 +13,7 @@ const VALID_COMMANDS = [
 const COMMAND_DISPLAY = {
   summon: 'Summon',
   call: 'Call',
-  pickup: 'Pick-Up',
+  'pick-up': 'Pick-Up',
   daily: 'Daily',
   weekly: 'Weekly',
 };
