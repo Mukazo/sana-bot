@@ -264,8 +264,7 @@ if (rarities.length) {
       name: ``,
       value: [
         `${rarityEmoji} **${card.name || 'Unknown'}** | ${card.group || 'Unknown'}`,
-        card.era ? `__${card.era}__` : null,
-        versionEmoji,
+        `__${card.era}__ ${versionEmoji}`,
         `\`${card.cardCode}\` x__**${targetQty}**__ ${compareEmoji}`,
         '⋆˙⟡ —————— ⋆˙⟡',
       ].filter(Boolean).join('\n'),
