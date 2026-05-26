@@ -255,18 +255,21 @@ if (rarities.length) {
       else if (viewerQty > 0 && targetQty === 0) compareEmoji = YOU_HAVE_EMOJI;
     }
 
-    const rarityEmoji = generateRarity({ rarity: card.rarity });
-    const versionText = card.version || 'Unknown';
+    const rarityDisplay = generateRarity({
+            rarity: card.rarity,
+          });
+    
+          const versionDisplay = generateVersion({
+            version: card.version,
+          });
 
     return {
-      name: `${rarityEmoji} ${card.group || 'Unknown'} — ${card.name || 'Unknown'}`,
+      name: `${rarityDisplay} ${card.group || 'Unknown'} — ${card.name || 'Unknown'}`,
       value: [
-        card.era ? `__${card.era}__` : null,
-        `**${versionText}**`,
-        `\`${card.cardCode}\``,
-        `x**${targetQty}** ${compareEmoji}`,
+        card.era ? `__${card.era}__` : null `**${versionDisplay}**`,
+        `\`${card.cardCode}\` x**${targetQty}** ${compareEmoji}`,
       ].filter(Boolean).join('\n'),
-      inline: false,
+      inline: true,
     };
   });
 
