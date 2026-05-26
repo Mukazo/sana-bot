@@ -4,12 +4,18 @@ const User = require('../../models/User');
 const VALID_COMMANDS = [
   'summon',
   'call',
+  'daily',
+  'weekly',
+  'pick-up',
 ];
 
 // ✨ Pretty display names (SAFE to decorate)
 const COMMAND_DISPLAY = {
   summon: 'Summon',
   call: 'Call',
+  'Pick-Up': 'Pick-Up',
+  daily: 'Daily',
+  weekly: 'Weekly',
 };
 
 // 💖 Cute mode formatter
