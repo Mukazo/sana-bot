@@ -10,7 +10,6 @@ const {
 const Card = require('../../models/Card');
 const CardInventory = require('../../models/CardInventory');
 const generateVersion = require('../../utils/generateVersion');
-const { emitQuestEvent } = require('../../utils/quest/tracker');
 const generateRarity = require('../../utils/generateRarity');
 
 const PAGE_SIZE = 6;
@@ -352,14 +351,5 @@ if (rarities.length) {
       row.components.forEach(b => b.setDisabled(true));
       await message.edit({ components: [row] }).catch(() => {});
     });
-
-    await emitQuestEvent(
-      interaction.user.id,
-      {
-        type: 'command',
-        commandName: 'inventory',
-      },
-      interaction
-    );
   },
 };
