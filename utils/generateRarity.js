@@ -6,9 +6,9 @@ module.exports = function generateRarity({ rarity = 'Common' }) {
     rare: '<:rare:1500053749656453240>',
     ultra: '<:ultra:1500053798742261881>',
     epic: '<:epic:1505252146344497322>',
-    special: '<:sulk:1496905608731824278>',
-    mythic: '<:tt_blush:1496905353911079044>',
-    prestige: '<:Yippeeyay:1496905291298504754>'
+    special: '<:special:1510768312399691946>',
+    mythic: '<:mythic:1510768271929114806>',
+    prestige: '<:prestige:1510768201909408026>'
   };
 
   const normalized = String(rarity).trim().toLowerCase();
