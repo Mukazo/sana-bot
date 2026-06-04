@@ -93,6 +93,16 @@ module.exports = {
     await sender.save();
     await recipient.save();
 
+    const rewards = [];
+
+if (kittokens > 0) {
+  rewards.push(`<:kittokens:1501647903486116081> **${kittokens.toLocaleString()}**`);
+}
+
+if (pawprints > 0) {
+  rewards.push(`<:pawprints:1501648560700002506> **${pawprints.toLocaleString()}**`);
+}
+
     const publicEmbed = new EmbedBuilder()
       .setAuthor({
     name: interaction.user.username,
@@ -100,13 +110,7 @@ module.exports = {
   })
       .setColor('#de6ead')
       .setDescription([
-        `${interaction.user} paid ${receiver} `,
-        kittokens > 0
-          ? `<:kittokens:1501647903486116081> **${kittokens.toLocaleString()}**`
-          : null,
-        pawprints > 0
-          ? `<:pawprints:1501648560700002506> **${pawprints.toLocaleString()}**`
-          : null,
+        `${receiver} you have received ${rewards.join(' and ')} from ${interaction.user} ༄.° `,
       ].filter(Boolean).join('\n'));
 
     const sentMessage = await interaction.editReply({
@@ -118,15 +122,7 @@ module.exports = {
     const dmEmbed = new EmbedBuilder()
       .setColor('#de6ead')
       .setDescription([
-        '## You Received A Payment ⋆˙⟡',
-        '',
-        `${interaction.user.tag} paid you`,
-        kittokens > 0
-          ? `<:kittokens:1501647903486116081> **${kittokens.toLocaleString()}**`
-          : null,
-        pawprints > 0
-          ? `<:pawprints:1501648560700002506> **${pawprints.toLocaleString()}**`
-          : null,
+        `${interaction.user} paid you ${rewards.join(' and ')}༄.° `,
         '',
         `> **New Balance:** <:kittokens:1501647903486116081> ${recipient.kittokens.toLocaleString()} & <:pawprints:1501648560700002506> ${recipient.pawprints.toLocaleString()}`,
         `[Jump to payment message](${messageLink})`,
