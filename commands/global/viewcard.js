@@ -53,6 +53,7 @@ module.exports = {
       const inventoryCounts = await CardInventory.aggregate([
   {
     $match: {
+      userId: interaction.user.id,
       cardCode: { $in: orderedCards.map(card => card.cardCode) }
     }
   },

@@ -39,6 +39,9 @@ module.exports = {
               { name: 'Version 1', value: '1' },
               { name: 'Version 2', value: '2' },
               { name: 'Version 3', value: '3' },
+              { name: 'Customs', value: '50'},
+              { name: 'Specials', value: '51'},
+              { name: 'Events', value: '52'},
             ))
         .addStringOption(opt => opt.setName('era').setDescription('era of card').setRequired(false))
         .addStringOption(opt => opt.setName('emoji').setDescription('optional card emoji').setRequired(false))

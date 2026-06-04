@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cardSchema = new mongoose.Schema({
     cardCode: { type: String, required: true, unique: true, index: true},
     name: {type: String, required: true},
+    namealias: {type: String},
     group: {type: String, rquired: true},
     groupalias: {type: String},
     rarity: {type: String, required: true},
