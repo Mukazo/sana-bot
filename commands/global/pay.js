@@ -108,7 +108,7 @@ if (pawprints > 0) {
     name: interaction.user.username,
     iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
   })
-      .setColor('#de6ead')
+      .setColor('#FFA6C2')
       .setDescription([
         `${receiver} you have received ${rewards.join(' and ')} from ${interaction.user} ༄.° `,
       ].filter(Boolean).join('\n'));
@@ -120,9 +120,9 @@ if (pawprints > 0) {
     const messageLink = sentMessage.url;
 
     const dmEmbed = new EmbedBuilder()
-      .setColor('#de6ead')
+      .setColor('#FFA6C2')
       .setDescription([
-        `${interaction.user} paid you ${rewards.join(' and ')}༄.° `,
+        `${interaction.user} has paid you ${rewards.join(' and ')} ༄.° `,
         '',
         `> **New Balance:** <:kittokens:1501647903486116081> ${recipient.kittokens.toLocaleString()} & <:pawprints:1501648560700002506> ${recipient.pawprints.toLocaleString()}`,
         `[Jump to payment message](${messageLink})`,
