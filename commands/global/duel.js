@@ -13,19 +13,19 @@ const OPTIONS = [
   {
     id: 'soccer',
     label: 'Soccer',
-    description: 'Kick the ball through the field',
+    description: 'Kick the ball around',
     emoji: '⚽',
   },
   {
     id: 'basketball',
     label: 'Basketball',
-    description: 'Shooting some hoops and passing',
+    description: 'Shoot some hoops',
     emoji: '🏀',
   },
   {
     id: 'skateboarding',
     label: 'Skateboarding',
-    description: 'Hitting some gnarly tricks',
+    description: 'Hit some gnarly tricks',
     emoji: '🛹',
   },
 ];
@@ -62,7 +62,10 @@ module.exports = {
     await cooldowns.setCooldown(userId, commandName, cooldownMs);
     const embed = new EmbedBuilder()
       .setColor('#ba4244')
-      .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
+      .setAuthor({
+    name: interaction.user.username,
+    iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+  })
       .setDescription([
         '## Pochacco playtime! ٩(^ᗜ^ )و ´-',
         '- He’s been waiting for u! <a:wh_pochaccoplay:1507461099719753828> In which sport do you choose to challenge him this time?',
@@ -118,7 +121,10 @@ module.exports = {
 
       const resultEmbed = new EmbedBuilder()
         .setColor(won ? '#5DEF77' : '#E74531')
-        .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true }))
+        .setAuthor({
+    name: interaction.user.username,
+    iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+  })
         .setDescription(
           won
             ? [
