@@ -16,6 +16,6 @@ module.exports = function generateVersion({ version = 1 }) {
     value = version;
   }
 
-  const clamped = Math.max(1, Math.min(2, value));
+  const clamped = Math.max(1, Math.min(52, value));
   return versionEmojis[clamped] || '';
 };
