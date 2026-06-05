@@ -7,6 +7,7 @@ const VALID_COMMANDS = [
   'daily',
   'weekly',
   'pick-up',
+  'duel',
 ];
 
 // ✨ Pretty display names (SAFE to decorate)
@@ -16,6 +17,7 @@ const COMMAND_DISPLAY = {
   'pick-up': 'Pick-Up',
   daily: 'Daily',
   weekly: 'Weekly',
+  duel: 'Duel',
 };
 
 // 💖 Cute mode formatter

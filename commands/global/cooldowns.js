@@ -7,11 +7,12 @@ const emojiMap = {
   Daily: '',
   Weekly: '',
   'Pick-Up': '',
+  Duel: '',
 };
 
 const categories = {
   Cards: ['Summon', 'Call'],
-  Money: ['Daily', 'Pick-Up'],
+  Money: ['Daily', 'Pick-Up', 'Duel'],
   Both: ['Weekly']
 };
 
