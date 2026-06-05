@@ -103,7 +103,7 @@ module.exports = {
       const selected = OPTIONS.find(option => option.id === select.values[0]);
       if (!selected) return;
 
-      const won = Math.random() < 0.5;
+      const won = Math.random() < 0.7;
       const reward = won ? randomInt(1, 5) : 0;
 
       let user = await User.findOne({ userId });
