@@ -68,7 +68,7 @@ const rarityFilter = rarityInput
 
     const versionFilter = versionInput
       ? versionInput.split(',').map(v => Number(v.trim())).filter(n => Number.isFinite(n))
-      : [1, 2, 3, 4, 5];
+      : [1, 2, 3, 4, 5, 51, 52, 53];
 
       const cardQuery = {
       batch: null,
