@@ -8,12 +8,14 @@ module.exports = function generateRarity({ rarity = 'Common' }) {
     epic: '<:epic:1505252146344497322>',
     special: '<:special:1510768312399691946>',
     mythic: '<:mythic:1510768271929114806>',
-    prestige: '<:prestige:1510768201909408026>'
+    prestige: '<:prestige:1510768201909408026>',
+    jubilee: '<:jubilee:1512580618339352636>'
   };
 
   const normalized = String(rarity).trim().toLowerCase();
 
   if (normalized.includes('prestige')) return rarityEmojis.prestige;
+  if (normalized.includes('jubilee')) return rarityEmojis.prestige;
   if (normalized.includes('mythic')) return rarityEmojis.mythic;
   if (normalized.includes('special')) return rarityEmojis.special;
   if (normalized.includes('epic')) return rarityEmojis.epic;

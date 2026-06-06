@@ -23,7 +23,8 @@ module.exports = {
               { name: 'Epic', value: 'Epic' },
               { name: 'Special', value: 'Special' },
               { name: 'Mythic', value: 'Mythic' },
-              { name: 'Prestige', value: 'Prestige' }
+              { name: 'Prestige', value: 'Prestige' },
+              { name: 'Jubilee', value: 'Jubilee' }
             ))
         .addStringOption(opt => opt.setName('group').setDescription('group of card').setRequired(true))
         .addStringOption(opt => opt.setName('name').setDescription('name of card').setRequired(true))
@@ -42,6 +43,7 @@ module.exports = {
               { name: 'Customs', value: '50'},
               { name: 'Specials', value: '51'},
               { name: 'Events', value: '52'},
+              { name: 'Birthdays', value: '53'},
             ))
         .addStringOption(opt => opt.setName('era').setDescription('era of card').setRequired(false))
         .addStringOption(opt => opt.setName('emoji').setDescription('optional card emoji').setRequired(false))

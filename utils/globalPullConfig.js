@@ -7,7 +7,8 @@ const RARITY_WEIGHTS = {
   'Ultra': 18,
   'Epic': 9,
   'Special': 2,
-  'Mythic': 1,
+  'Mythic': 0.5,
+  'Jubilee': 0.5,
 };
 
 // Hardcoded multipliers for eras (always lowercased keys!)
