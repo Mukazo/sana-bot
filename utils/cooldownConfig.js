@@ -4,7 +4,7 @@ module.exports = {
   Summon: 5 * 60 * 1000,
   Call: 2 * 60 * 1000,
   Duel: 10 * 60 * 1000,
-  Miracle: 1 * 60 * 60 * 1000,
+  Miracle: 30 * 60 * 1000,
   Daily: 24 * 60 * 60 * 1000,
   Weekly: 7 * 24 * 60 * 60 * 1000,
   'Pick-Up': 15 * 60 * 1000,
