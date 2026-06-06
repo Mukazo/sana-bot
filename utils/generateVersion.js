@@ -5,6 +5,7 @@ module.exports = function generateVersion({ version = 1 }) {
     50: '<:prestige:1510768201909408026>', // Customs
     51: '<:special:1510768312399691946>', // Specials
     52: '<:mythic:1510768271929114806>', // Events
+    53: '<:jubilee:1512580618339352636>',
   };
 
   let value = 1;
@@ -16,6 +17,6 @@ module.exports = function generateVersion({ version = 1 }) {
     value = version;
   }
 
-  const clamped = Math.max(1, Math.min(52, value));
+  const clamped = Math.max(1, Math.min(53, value));
   return versionEmojis[clamped] || '';
 };
