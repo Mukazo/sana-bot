@@ -141,7 +141,7 @@ module.exports = {
           `## Cinnamoroll has dropped off some gifts!! <:NH_cinnamoroll:1512807779730063480>`,
           `-# ${targetUser}`,
           `<:kittokens:1501647903486116081> Kittokens : **${kittokens.toLocaleString()}** ♡ <:pawprints:1501648560700002506> Pawprints : **${pawprints.toLocaleString()}**`,
-          '',
+          '\n',
           '<:cards:1502007264868040897>',
           slice.length
             ? slice.map(card => {
@@ -228,6 +228,7 @@ module.exports = {
         target.pawprints += pawprints;
 
         await target.save();
+        const messageLink = reply.url;
 
         for (const card of cards) {
           const quantity = quantityMap.get(card.cardCode) || 1;
@@ -252,11 +253,12 @@ module.exports = {
               new EmbedBuilder()
                 .setColor('#baeef2')
                 .setDescription([
-                  `You received staff rewards from ${interaction.user}.`,
+                  `${interaction.user} has given you rewards ༄.°`,
                   '',
-                  `> Kittokens: **${kittokens.toLocaleString()}**`,
-                  `> Pawprints: **${pawprints.toLocaleString()}**`,
-                  `> Card Copies: **${totalCardCopies}**`,
+                  `-# <:kittokens:1501647903486116081>: **${kittokens.toLocaleString()}** & <:pawprints:1501648560700002506> : **${pawprints.toLocaleString()}**`,
+                  `> <:cards:1502007264868040897>: **${totalCardCopies}**`,
+                  `> **New Balance:** <:kittokens:1501647903486116081> ${target.kittokens.toLocaleString()} & <:pawprints:1501648560700002506> ${target.pawprints.toLocaleString()}`,
+                  `[Jump to payment message](${messageLink})`,
                 ].join('\n')),
             ],
           });
