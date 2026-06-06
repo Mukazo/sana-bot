@@ -140,7 +140,7 @@ module.exports = {
 
     const cardLines = pulledCards.map((card, index) => {
       const rarityEmoji = generateRarity({ rarity: card.rarity });
-      const versionEmoji = generateRarity({ version: card.version });
+      const versionEmoji = card.emoji || generateVersion({ version: card.version });
       const guaranteed = index === 0 ? '' : '';
 
       return `(${versionEmoji}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``;
@@ -154,7 +154,7 @@ module.exports = {
       .setColor('#565656')
       .setDescription([
         '## ໒꒰ྀིᵔ ᵕ ᵔ ꒱ྀི১ Weekly',
-        '- **Kuromi** <:NH_kuromi:1466870426415272111> is up to something again... You decided to join her which resulted in unforgettable memories and new collection items!!',
+        '- **Kuromi** <:kuromi:1512931699812466698> is up to something again... You decided to join her which resulted in unforgettable memories and new collection items!!',
         `> <:kittokens:1501647903486116081> Kittokens : **${reward.kittokens.toLocaleString()}** ♡ <:pawprints:1501648560700002506> Pawprints : **${reward.pawprints}**`,
         `~ Streak increased to ${streak} weeks! <:pinkfire:1502212161596948512>`,
         '',
