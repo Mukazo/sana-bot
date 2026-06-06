@@ -1,4 +1,5 @@
 const summon = require('./summon');
+const miracle = require('./miracle');
 
 module.exports = async interaction => {
   if (!interaction.isButton()) return false;
@@ -8,6 +9,11 @@ module.exports = async interaction => {
 
     if (interaction.customId.startsWith('summon:')) {
       await summon(interaction);
+      return true;
+    }
+
+    if (interaction.customId.startsWith('miracle:')) {
+      await miracle(interaction);
       return true;
     }
 
