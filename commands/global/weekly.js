@@ -90,8 +90,8 @@ module.exports = {
 
     async function pullGuaranteedSpecialOrMythic() {
       const rarities = Math.random() < 0.5
-        ? ['Special', 'Mythic']
-        : ['Mythic', 'Special'];
+        ? ['Special', 'Mythic', 'Jubilee']
+        : ['Mythic', 'Special', 'Jubilee'];
 
       for (const rarity of rarities) {
         const card = await pullOneCard(rarity, 15);

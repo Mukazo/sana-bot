@@ -64,7 +64,7 @@ const nameFilter = parseList(nameInput);
 const eraFilter = parseList(eraInput);
 const rarityFilter = rarityInput
   ? parseList(rarityInput)
-  : ['Common', 'Rare', 'Ultra', 'Epic', 'Special', 'Mythic'];
+  : ['Common', 'Rare', 'Ultra', 'Epic', 'Special', 'Mythic', 'Jubilee'];
 
     const versionFilter = versionInput
       ? versionInput.split(',').map(v => Number(v.trim())).filter(n => Number.isFinite(n))
@@ -109,9 +109,7 @@ const rarityFilter = rarityInput
   cardQuery.$and = cardQuery.$and || [];
 
   cardQuery.$and.push({
-    $or: eraFilter.map(v => ({
-      era: { $in: toRegexList(eraFilter)}
-    }))
+    era: { $in: toRegexList(eraFilter) },
   });
 }
 
