@@ -15,7 +15,7 @@ module.exports = function generateRarity({ rarity = 'Common' }) {
   const normalized = String(rarity).trim().toLowerCase();
 
   if (normalized.includes('prestige')) return rarityEmojis.prestige;
-  if (normalized.includes('jubilee')) return rarityEmojis.prestige;
+  if (normalized.includes('jubilee')) return rarityEmojis.jubilee;
   if (normalized.includes('mythic')) return rarityEmojis.mythic;
   if (normalized.includes('special')) return rarityEmojis.special;
   if (normalized.includes('epic')) return rarityEmojis.epic;
