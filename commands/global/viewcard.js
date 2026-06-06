@@ -74,8 +74,8 @@ const totalCopiesMap = new Map(
     function buildPage(index) {
       const card = orderedCards[index];
 
-      const versionDisplay = generateVersion({
-        version: card.version,
+      const rarityDisplay = generateRarity({
+        rarity: card.rarity,
       });
 
       const designers = Array.isArray(card.designerIds) && card.designerIds.length
@@ -84,7 +84,7 @@ const totalCopiesMap = new Map(
 
       const embed = new EmbedBuilder()
         .setColor(0xE8D0A1)
-        .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡\n︵︵ __${card.era}__ ⟡﹐\n✨ ﹒ ┈ ﹕${card.emoji || generateRarity(card)} | ${versionDisplay} ﹒ ᶻᶻ ﹒\n-# ¦ made by : ${designers}`)
+        .setDescription(`## ***Viewing...***\n﹒ \<:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡\n︵︵ __${card.era}__ ⟡﹐\n✨ ﹒ ┈ ﹕${rarityDisplay} | ${card.emoji || generateVersion(card)} ﹒ ᶻᶻ ﹒\n-# ¦ made by : ${designers}`)
         .setFooter({
   text: `Page ${index + 1} of ${orderedCards.length} • Copies Owned: ${totalCopiesMap.get(card.cardCode) || 0}`,
 });
