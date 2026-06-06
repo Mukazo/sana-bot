@@ -9,9 +9,6 @@ const cooldowns = require('../../utils/cooldownManager');
 const Card = require('../../models/Card');
 const CardInventory = require('../../models/CardInventory');
 
-const CLAIM_COOLDOWN = 30_000; // 30 seconds
-const COOLDOWN_NAME = 'Claim';
-
 module.exports = async function summonButtonHandler(interaction) {
   if (!interaction.customId.startsWith('miracle:')) return;
 
@@ -72,13 +69,6 @@ module.exports = async function summonButtonHandler(interaction) {
       content: 'This card has already been claimed.',
       ephemeral: true,
     });
-  }
-
-  if (await cooldowns.isOnCooldown(interaction.user.id, COOLDOWN_NAME)) {
-    const ts = await cooldowns.getCooldownTimestamp(
-      interaction.user.id,
-      COOLDOWN_NAME
-    );
   }
 
   if (
@@ -146,11 +136,6 @@ console.log('[MIRACLE DEBUG] Full card loaded for quest:', {
   era: fullCard.era,
 });
 
-  await cooldowns.setCooldown(
-    interaction.user.id,
-    COOLDOWN_NAME,
-    CLAIM_COOLDOWN
-  );
 
   await interaction.followUp({
   content: `You claimed **${card.cardCode}**. You now have **${quantity}** copies.`,
