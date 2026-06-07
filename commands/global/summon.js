@@ -160,7 +160,7 @@ module.exports = {
 
     const cardLines = pulls.map(card => {
       const rarityEmoji = generateRarity({ rarity: card.rarity });
-      const versionEmoji = generateVersion({ version: card.version });
+      const versionEmoji = card.emoji || generateVersion({ version: card.version });
 
       return [
         `💌 (${versionEmoji}) **${card.name || 'Unknown'}** ${card.group || 'Unknown Group'} __${card.era || 'Unknown Era'}__ ${rarityEmoji} | \`${card.cardCode}\``,
