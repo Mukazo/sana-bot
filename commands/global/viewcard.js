@@ -236,6 +236,7 @@ module.exports = {
             `﹒ <:samus:1501287426537029676> **${card.name}** ﹗ ${card.group} 彡`,
             `︵︵ __${card.era}__ ⟡﹐`,
             `✨ ﹒ ┈ ﹕${rarityDisplay} | ${card.emoji || generateVersion(card)} ﹒ ᶻᶻ ﹒`,
+            `﹒\`${card.cardCode}\``,
             `-# ¦ made by : ${designers}`,
           ].join('\n')
         )
