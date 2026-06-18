@@ -173,10 +173,8 @@ module.exports = {
           iconURL: targetUser.displayAvatarURL({ dynamic: true }),
         })
         .setDescription([
-          `## Cinnamoroll has dropped off a gift!! <:NH_cinnamoroll:1512807779730063480>`,
-          `-# ${targetUser}`,
+          `${targetUser} you have received <:cards:1502007264868040897> cards from ${interaction.user} ༄.°`,
           '',
-          '<:cards:1502007264868040897>',
           slice.length
             ? slice.map(card => {
                 const rarityDisplay = generateRarity({ rarity: card.rarity });
@@ -268,18 +266,34 @@ module.exports = {
 
         const messageLink = reply.url;
 
-        await targetUser.send({
-          embeds: [
-            new EmbedBuilder()
-              .setColor('#baeef2')
-              .setDescription([
-                `${interaction.user} has gifted you cards ༄.°`,
-                '',
-                `> <:cards:1502007264868040897>: **${totalCardCopies}** copies`,
-                `[Jump to gift message](${messageLink})`,
-              ].join('\n')),
-          ],
-        }).catch(() => null);
+        const receiptCards = cards.slice(0, 5).map(card => {
+  const rarityDisplay = generateRarity({ rarity: card.rarity });
+  const versionDisplay = card.emoji || generateVersion({ version: card.version });
+  const qty = quantityMap.get(card.cardCode) || 1;
+
+  return `${versionDisplay} **${card.name || 'Unknown'}** ${card.group || 'Unknown'} __${card.era || 'Unknown'}__ ${rarityDisplay} | \`${card.cardCode}\` x${qty}`;
+});
+
+await targetUser.send({
+  embeds: [
+    new EmbedBuilder()
+      .setColor('#baeef2')
+      .setDescription([
+        `${interaction.user} has gifted you cards ༄.°`,
+        '',
+        `> <:cards:1502007264868040897>: **${totalCardCopies}** copies`,
+        '',
+        receiptCards.length
+          ? receiptCards.join('\n')
+          : '',
+        cards.length > 5
+          ? ``
+          : null,
+        '',
+        `[Jump to gift message](${messageLink})`,
+      ].filter(Boolean).join('\n')),
+  ],
+}).catch(() => null);
 
         collector.stop('confirmed');
 
