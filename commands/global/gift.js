@@ -174,7 +174,7 @@ module.exports = {
         })
         .setDescription([
           `${targetUser} you have received <:cards:1502007264868040897> cards from ${interaction.user} ༄.°`,
-          '',
+          '\n',
           slice.length
             ? slice.map(card => {
                 const rarityDisplay = generateRarity({ rarity: card.rarity });
