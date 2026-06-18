@@ -1,13 +1,11 @@
 const {
   SlashCommandBuilder,
-  PermissionFlagsBits,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
 } = require('discord.js');
 
-const User = require('../../models/User');
 const Card = require('../../models/Card');
 const CardInventory = require('../../models/CardInventory');
 const generateRarity = require('../../utils/generateRarity');
@@ -17,34 +15,37 @@ const PAGE_SIZE = 5;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('staff-handle')
-    .setDescription('Handle rewarding users with currency and cards')
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
+    .setName('gift')
+    .setDescription('Gift cards to another user')
     .addUserOption(option =>
-      option.setName('user')
-        .setDescription('User to give rewards to')
+      option
+        .setName('user')
+        .setDescription('User to gift cards to')
         .setRequired(true)
     )
-    .addIntegerOption(option =>
-      option.setName('kittokens')
-        .setDescription('Amount of kittokens')
-        .setMinValue(0)
-    )
-    .addIntegerOption(option =>
-      option.setName('pawprints')
-        .setDescription('Amount of pawprints')
-        .setMinValue(0)
-    )
     .addStringOption(option =>
-      option.setName('codes')
+      option
+        .setName('codes')
         .setDescription('Example: ABC001, ABC002:3, ABC003:10')
+        .setRequired(true)
     ),
 
   async execute(interaction) {
+    const senderId = interaction.user.id;
     const targetUser = interaction.options.getUser('user');
-    const kittokens = interaction.options.getInteger('kittokens') || 0;
-    const pawprints = interaction.options.getInteger('pawprints') || 0;
     const rawCardInput = interaction.options.getString('codes') || '';
+
+    if (targetUser.bot) {
+      return interaction.editReply({
+        content: 'You cannot gift cards to bots.',
+      });
+    }
+
+    if (targetUser.id === senderId) {
+      return interaction.editReply({
+        content: 'You cannot gift cards to yourself.',
+      });
+    }
 
     const cardEntries = rawCardInput
       .split(',')
@@ -53,15 +54,16 @@ module.exports = {
       .map(entry => {
         const [rawCode, rawQty] = entry.split(':');
         const quantity = Number(rawQty || 1);
+
         return {
           cardCode: rawCode.trim().toUpperCase(),
           quantity: Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1,
         };
       });
 
-    if (!kittokens && !pawprints && !cardEntries.length) {
+    if (!cardEntries.length) {
       return interaction.editReply({
-        content: 'You must provide at least one reward.',
+        content: 'Please provide at least one card code.',
       });
     }
 
@@ -76,18 +78,51 @@ module.exports = {
 
     const uniqueCardCodes = [...quantityMap.keys()];
 
-    const cards = uniqueCardCodes.length
-      ? await Card.find({
-          cardCode: { $in: uniqueCardCodes },
-        })
-          .select('cardCode name group era rarity version emoji')
-          .lean()
-      : [];
+    const cards = await Card.find({
+      cardCode: { $in: uniqueCardCodes },
+    })
+      .select('cardCode name group era rarity version emoji')
+      .lean();
 
     const validCodes = new Set(cards.map(card => card.cardCode));
-
     const invalidCodes = uniqueCardCodes.filter(code => !validCodes.has(code));
 
+    if (!cards.length) {
+      return interaction.editReply({
+        content: `No valid cards found. Invalid: ${invalidCodes.join(', ')}`,
+      });
+    }
+
+    const senderInventory = await CardInventory.find({
+      userId: senderId,
+      cardCode: { $in: cards.map(card => card.cardCode) },
+    }).lean();
+
+    const senderMap = new Map(
+      senderInventory.map(item => [item.cardCode, item.quantity || 0])
+    );
+
+    const missingCards = cards.filter(card => {
+      const ownedQty = senderMap.get(card.cardCode) || 0;
+      const giftQty = quantityMap.get(card.cardCode) || 1;
+
+      return ownedQty < giftQty;
+    });
+
+    if (missingCards.length) {
+      return interaction.editReply({
+        content: [
+          'You do not have enough copies of:',
+          missingCards
+            .map(card => {
+              const ownedQty = senderMap.get(card.cardCode) || 0;
+              const giftQty = quantityMap.get(card.cardCode) || 1;
+              return `\`${card.cardCode}\` owned: ${ownedQty}, needed: ${giftQty}`;
+            })
+            .join('\n'),
+        ].join('\n'),
+      });
+    }
     const totalCardCopies = cards.reduce((sum, card) => {
       return sum + (quantityMap.get(card.cardCode) || 1);
     }, 0);
@@ -101,25 +136,25 @@ module.exports = {
 
     const buildRow = disabled => new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId('staff-handle_prev')
+        .setCustomId('gift_prev')
         .setLabel('Previous')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(disabled || maxPage === 0),
 
       new ButtonBuilder()
-        .setCustomId('staff-handle_confirm')
+        .setCustomId('gift_confirm')
         .setLabel('Confirm')
         .setStyle(ButtonStyle.Success)
         .setDisabled(disabled),
 
       new ButtonBuilder()
-        .setCustomId('staff-handle_cancel')
+        .setCustomId('gift_cancel')
         .setLabel('Cancel')
         .setStyle(ButtonStyle.Danger)
         .setDisabled(disabled),
 
       new ButtonBuilder()
-        .setCustomId('staff-handle_next')
+        .setCustomId('gift_next')
         .setLabel('Next')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(disabled || maxPage === 0)
@@ -134,20 +169,20 @@ module.exports = {
       return new EmbedBuilder()
         .setColor('#baeef2')
         .setAuthor({
-    name: targetUser.username,
-    iconURL: targetUser.displayAvatarURL({ dynamic: true }),
-  })
+          name: targetUser.username,
+          iconURL: targetUser.displayAvatarURL({ dynamic: true }),
+        })
         .setDescription([
-          `## Cinnamoroll has dropped off some gifts!! <:NH_cinnamoroll:1512807779730063480>`,
+          `## Cinnamoroll has dropped off a gift!! <:NH_cinnamoroll:1512807779730063480>`,
           `-# ${targetUser}`,
-          `<:kittokens:1501647903486116081> Kittokens : **${kittokens.toLocaleString()}** ♡ <:pawprints:1501648560700002506> Pawprints : **${pawprints.toLocaleString()}**`,
-          '\n',
+          '',
           '<:cards:1502007264868040897>',
           slice.length
             ? slice.map(card => {
                 const rarityDisplay = generateRarity({ rarity: card.rarity });
                 const versionDisplay = card.emoji || generateVersion({ version: card.version });
                 const qty = quantityMap.get(card.cardCode) || 1;
+
                 return `${versionDisplay} **${card.name || 'Unknown'}** ${card.group || 'Unknown'} __${card.era || 'Unknown'}__ ${rarityDisplay} | \`${card.cardCode}\` x${qty}`;
               }).join('\n')
             : 'None',
@@ -155,15 +190,12 @@ module.exports = {
           invalidCodes.length
             ? `Invalid: ${invalidCodes.join(', ')}`
             : null,
-          confirmed
-            ? '\n'
-            : null,
+          confirmed ? '' : null,
         ].filter(Boolean).join('\n'))
         .setFooter({
           text: `Page ${page + 1} / ${maxPage + 1} • Total Card Copies: ${totalCardCopies}`,
         });
     };
-
     const reply = await interaction.editReply({
       embeds: [buildEmbed(false)],
       components: [buildRow(false)],
@@ -176,14 +208,14 @@ module.exports = {
     let confirmed = false;
 
     collector.on('collect', async i => {
-      if (i.user.id !== interaction.user.id) {
+      if (i.user.id !== senderId) {
         return i.reply({
           content: 'This command was not ran by you, you cannot use the buttons.',
           ephemeral: true,
         });
       }
 
-      if (i.customId === 'staff-handle_prev') {
+      if (i.customId === 'gift_prev') {
         page = page <= 0 ? maxPage : page - 1;
 
         return i.update({
@@ -192,7 +224,7 @@ module.exports = {
         });
       }
 
-      if (i.customId === 'staff-handle_next') {
+      if (i.customId === 'gift_next') {
         page = page >= maxPage ? 0 : page + 1;
 
         return i.update({
@@ -201,68 +233,53 @@ module.exports = {
         });
       }
 
-      if (i.customId === 'staff-handle_cancel') {
+      if (i.customId === 'gift_cancel') {
         collector.stop('cancelled');
 
         return i.update({
-          content: 'Staff gifting has been cancelled.',
+          content: 'Gift has been cancelled.',
           embeds: [],
           components: [],
         });
       }
 
-      if (i.customId === 'staff-handle_confirm') {
+      if (i.customId === 'gift_confirm') {
         confirmed = true;
-
-        let target = await User.findOne({
-          userId: targetUser.id,
-        });
-
-        if (!target) {
-          target = await User.create({
-            userId: targetUser.id,
-          });
-        }
-
-        target.kittokens += kittokens;
-        target.pawprints += pawprints;
-
-        await target.save();
-        const messageLink = reply.url;
 
         for (const card of cards) {
           const quantity = quantityMap.get(card.cardCode) || 1;
 
           await CardInventory.updateOne(
-            {
-              userId: targetUser.id,
-              cardCode: card.cardCode,
-            },
-            {
-              $inc: { quantity },
-            },
-            {
-              upsert: true,
-            }
+            { userId: senderId, cardCode: card.cardCode },
+            { $inc: { quantity: -quantity } }
+          );
+
+          await CardInventory.updateOne(
+            { userId: targetUser.id, cardCode: card.cardCode },
+            { $inc: { quantity } },
+            { upsert: true }
           );
         }
 
-        try {
-          await targetUser.send({
-            embeds: [
-              new EmbedBuilder()
-                .setColor('#baeef2')
-                .setDescription([
-                  `${interaction.user} has given you rewards ༄.°`,
-                  '',
-                  `-# <:kittokens:1501647903486116081>: **${kittokens.toLocaleString()}** & <:pawprints:1501648560700002506> : **${pawprints.toLocaleString()}**`,
-                  `> <:cards:1502007264868040897>: **${totalCardCopies}**`,
-                  `> **New Balance:** <:kittokens:1501647903486116081> ${target.kittokens.toLocaleString()} & <:pawprints:1501648560700002506> ${target.pawprints.toLocaleString()}`,
-                  `[Jump to payment message](${messageLink})`,
-                ].join('\n')),
-            ],
-          });
-        } catch {}
+        await CardInventory.deleteMany({
+          userId: senderId,
+          quantity: { $lte: 0 },
+        });
+
+        const messageLink = reply.url;
+
+        await targetUser.send({
+          embeds: [
+            new EmbedBuilder()
+              .setColor('#baeef2')
+              .setDescription([
+                `${interaction.user} has gifted you cards ༄.°`,
+                '',
+                `> <:cards:1502007264868040897>: **${totalCardCopies}** copies`,
+                `[Jump to gift message](${messageLink})`,
+              ].join('\n')),
+          ],
+        }).catch(() => null);
 
         collector.stop('confirmed');
 
