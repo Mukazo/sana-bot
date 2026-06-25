@@ -198,7 +198,7 @@ module.exports = {
 
     await SummonSession.create({
       messageId: reply.id,
-      channelId: interaction.channel.id,
+      channelId: interaction.channelId,
       guildId: interaction.guildId,
       ownerId,
       cards: pulls.map(card => ({
@@ -212,7 +212,7 @@ module.exports = {
     setTimeout(async () => {
       try {
         const channel = await interaction.client.channels.fetch(
-          reply.channel.id
+          reply.channelId
         );
 
         const message = await channel.messages.fetch(reply.id);

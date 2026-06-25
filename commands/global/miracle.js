@@ -56,25 +56,11 @@ module.exports = {
     .setDescription('Card treasures began to appear, choose one!'),
 
   async execute(interaction) {
-    console.time(`[Miracle] total ${interaction.user.id}`);
+    console.time(`[miracle] total ${interaction.user.id}`);
 
     const ownerId = interaction.user.id;
 
     const commandName = 'Miracle';
-
-    const userDoc = await User.findOne({
-  userId: ownerId,
-});
-
-if (!userDoc || userDoc.pawprints < 2) {
-  return interaction.editReply({
-    content:
-      'You need at least <:pawprints:1501648560700002506> **2** pawprints to use miracle.',
-  });
-}
-
-userDoc.pawprints -= 2;
-await userDoc.save();
 
     const cooldownMs = await cooldowns.getEffectiveCooldown(
       interaction,
@@ -87,12 +73,26 @@ await userDoc.save();
         commandName
       );
 
-      console.timeEnd(`[summon] total ${interaction.user.id}`);
+      console.timeEnd(`[miracle] total ${interaction.user.id}`);
 
       return interaction.editReply({
         content: `*/miracle* is currently on cooldown! You can use it again ${nextTime}`,
       });
     }
+
+     const userDoc = await User.findOne({
+  userId: ownerId,
+});
+
+if (!userDoc || userDoc.pawprints < 2) {
+  return interaction.editReply({
+    content:
+      'You need at least <:pawprints:1501648560700002506> **2** pawprints to use miracle.',
+  });
+}
+
+userDoc.pawprints -= 2;
+await userDoc.save();
 
     await cooldowns.setCooldown(ownerId, commandName, cooldownMs);
     const summonUser = await User.findOne({ userId: ownerId })
@@ -226,7 +226,7 @@ async function pullOneCard(userId, loadedUser, maxAttempts = 10) {
 
     await SummonSession.create({
       messageId: reply.id,
-      channelId: interaction.channel.id,
+      channelId: interaction.channelId,
       guildId: interaction.guildId,
       ownerId,
       cards: pulls.map(card => ({
@@ -240,7 +240,7 @@ async function pullOneCard(userId, loadedUser, maxAttempts = 10) {
     setTimeout(async () => {
       try {
         const channel = await interaction.client.channels.fetch(
-          reply.channel.id
+          reply.channelId
         );
 
         const message = await channel.messages.fetch(reply.id);
