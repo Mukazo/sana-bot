@@ -105,15 +105,12 @@ await userDoc.save();
   'Jubilee',
 ];
 
-async function pullOneCard(userId, loadedUser, maxAttempts = 10) {
-  for (let i = 0; i < maxAttempts; i++) {
-    const rarity =
-      MIRACLE_RARITIES[
-        Math.floor(
-          Math.random() * MIRACLE_RARITIES.length
-        )
-      ];
+async function pullOneCard(userId, loadedUser) {
+  const shuffledRarities = [...MIRACLE_RARITIES].sort(
+    () => Math.random() - 0.5
+  );
 
+  for (const rarity of shuffledRarities) {
     const card = await randomCardFromRarity(
       rarity,
       userId,
@@ -240,7 +237,7 @@ async function pullOneCard(userId, loadedUser, maxAttempts = 10) {
     setTimeout(async () => {
       try {
         const channel = await interaction.client.channels.fetch(
-          reply.channelId
+          interaction.channelId
         );
 
         const message = await channel.messages.fetch(reply.id);
