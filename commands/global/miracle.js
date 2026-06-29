@@ -128,7 +128,21 @@ async function pullOneCard(userId, loadedUser) {
       pullOneCard(ownerId, summonUser, 10),
     ]);
 
-    const pulls = pullResults.filter(Boolean);
+    const pulls = [];
+const usedCardCodes = new Set();
+
+while (pulls.length < 2) {
+  const card = await pullOneCard(ownerId, summonUser);
+
+  if (!card) break;
+
+  if (usedCardCodes.has(card.cardCode)) {
+    continue;
+  }
+
+  usedCardCodes.add(card.cardCode);
+  pulls.push(card);
+}
 
     if (pulls.length < 2) {
   userDoc.pawprints += 2;
