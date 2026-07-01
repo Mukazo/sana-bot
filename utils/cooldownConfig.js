@@ -1,8 +1,30 @@
 // utils/cooldownConfig.js
 
 module.exports = {
-  Summon: 5 * 60 * 1000,
-  Call: 2 * 60 * 1000,
+  Summon: {
+    default: 5 * 60 * 1000,
+    reductions: [
+  { id: '1438128870472683642', percent: 10, group: 'patreon' }, // Talent Time
+  { id: '1438128944170926200', percent: 15, group: 'patreon' }, // Rainbow
+  { id: '1438129012512657449', percent: 20, group: 'patreon' }, // Imagination
+  { id: '1509846234691797012', percent: 30, group: 'patreon' }, // Stargazing
+
+  { id: '1433769011526631600', percent: 10 },  // Booster
+  { id: '1431755018729422929', percent: 5 },  // /sanabot
+    ]
+  },
+  Call: {
+    default: 2 * 60 * 1000,
+    reductions: [
+  { id: '1447006737042378772', percent: 10, group: 'patreon' }, // Talent
+  { id: '1438128944170926200', percent: 15, group: 'patreon' }, // Rainbow
+  { id: '1438129012512657449', percent: 20, group: 'patreon' }, // Imagination
+  { id: '1509846234691797012', percent: 30, group: 'patreon' }, // Stargazing
+
+  { id: '1433769011526631600', percent: 10 },  // Booster
+  { id: '1431755018729422929', percent: 5 },  // /sanabot
+    ]
+  },
   Duel: 10 * 60 * 1000,
   Miracle: 30 * 60 * 1000,
   Daily: 24 * 60 * 60 * 1000,
