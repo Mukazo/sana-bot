@@ -25,8 +25,13 @@ module.exports = {
   { id: '1431755018729422929', percent: 5 },  // /sanabot
     ]
   },
+  Miracle: {
+    default: 30 * 60 * 1000,
+    reductions: [
+  { id: '1509846234691797012', percent: 30, group: 'patreon' }, // Stargazing
+    ]
+  },
   Duel: 10 * 60 * 1000,
-  Miracle: 30 * 60 * 1000,
   Daily: 24 * 60 * 60 * 1000,
   Weekly: 7 * 24 * 60 * 60 * 1000,
   'Pick-Up': 15 * 60 * 1000,
